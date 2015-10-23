@@ -1,0 +1,11 @@
+-forest 0
+-forest_tones 5
+-forest_color 0 100 225 0
+-forest_color 4 0 200 0
+-peak_bias 0.5
+-sea 6
+-sea_tones 5
+-sea_color 0 0 220 245
+-sea_color 4 0 160 220
+-trough_bias 0.8
+-no_hills

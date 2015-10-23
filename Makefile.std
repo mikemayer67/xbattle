@@ -1,0 +1,51 @@
+CC=g++
+CFLAGS=-g -O2
+LDFLAGS= -L/usr/X11/lib
+CPPFLAGS= -I/usr/X11/include
+INSTALL=/usr/bin/install -c
+MKDIR=./install-sh -c -d
+
+TARGET = xbattle
+
+prefix=/usr/local
+exec_prefix=${prefix}
+bindir=${exec_prefix}/bin
+datarootdir=${prefix}/share
+datadir=${datarootdir}
+manvolume=6
+mandir=${datarootdir}/man/man$(manvolume)
+
+SRC = $(wildcard src/*.cc)
+OBJ = $(SRC:src/%.cc=obj/%.o)
+LIB = -lX11 -lm
+
+all: $(TARGET)
+
+$(TARGET): $(OBJ)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^ $(LIB)
+
+$(OBJ) : obj/%.o : src/%.cc
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+
+.PHONY: clean clobber
+
+clean:
+	$(RM) obj/*.o *~ 
+
+clobber: clean
+	$(RM) $(TARGET)
+
+install: $(TARGET)
+	-$(INSTALL) $(TARGET) $(DESTDIR)$(bindir)
+	-$(INSTALL) $(TARGET) $(DESTDIR)$(bindir)
+	-$(MKDIR) $(DESTDIR)$(datadir)/$(TARGET)
+	-$(MKDIR) $(DESTDIR)$(datadir)/$(TARGET)/xbas
+	-$(MKDIR) $(DESTDIR)$(datadir)/$(TARGET)/xbos
+	-$(MKDIR) $(DESTDIR)$(datadir)/$(TARGET)/xbts
+	-$(MKDIR) $(DESTDIR)$(mandir)
+	-$(INSTALL) -m755 tutorial* $(DESTDIR)$(datadir)/$(TARGET)
+	-$(INSTALL) -m644 *.dot $(DESTDIR)$(datadir)/$(TARGET)
+	-$(INSTALL) -m644 xbas/* $(DESTDIR)$(datadir)/$(TARGET)/xbas
+	-$(INSTALL) -m644 xbos/* $(DESTDIR)$(datadir)/$(TARGET)/xbos
+	-$(INSTALL) -m644 xbts/* $(DESTDIR)$(datadir)/$(TARGET)/xbts
+	-$(INSTALL) -m644 xbattle.man $(DESTDIR)$(mandir)/xbattle.$(manvolume)

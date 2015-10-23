@@ -1,0 +1,15 @@
+-hex
+-boardx	34
+-boardy 28
+-cell 28
+-farms 7
+-decay 2
+-militia 5
+-repeat
+-attack
+-hills 0
+-hill_tones 5
+-sea 4
+-sea_tones 5
+-fill
+-dig

@@ -1,0 +1,11 @@
+-hills 0
+-hill_tones 5
+-hill_color 0 255 170 130
+-hill_color 4 220 100 0
+-peak_bias 1.0
+-sea 3
+-sea_tones 5
+-sea_color 0 250 240 0
+-sea_color 4 220 210 0
+-trough_bias 0.8
+-color mark 170 0 0

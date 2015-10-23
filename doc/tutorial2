@@ -1,0 +1,546 @@
+#! /bin/sh
+
+echo "=================== XBATTLE TUTORIAL 2 ========================" 
+echo "hit RETURN to continue"
+read p1
+clear
+
+echo "I will presume that  you have  already  done the first tutorial,"
+echo "and  hopefully played  a few games   with some of   your friends"
+echo "before trying out  this tutorial.   Here we will  show you  some"
+echo "more advanced things you can do with xbattle."
+
+echo
+
+echo "hit RETURN to continue"
+read p1
+clear
+
+echo "First, we  will   introduce  guns  and   paratroops.  These  are"
+echo "particularly  handy when you have  seas  that cannot be crossed,"
+echo "and can  also be used  for commando attacks or to  break  supply"
+echo "lines behind enemy lines.  Guns are aimed with the  mouse in the"
+echo "game square from which you wish to shoot, and the  direction and"
+echo "distance of your cursor click from the center of the game square"
+echo "determines the azimuth and range of  the shot.  For  example, if"
+echo "the mouse is in position A below,  i.e. just above  center, then"
+echo "the shot will  fall  at short range to  the  north.   Position B"
+echo "represents a long range shot to the north, and C, a medium range"
+echo "shot to the south  east.  The shot is  triggered by striking the"
+echo "'g'  key on the  keyboard (g for  'guns') while aiming  with the"
+echo "mouse."
+
+echo "              GAME SQUARE"
+echo "	   =============================="
+echo "	   ||             B             ||"
+echo "	   ||                           ||"
+echo "	   ||                           ||"
+echo "	   ||                           ||"
+echo "	   ||                           ||"
+echo "	   ||             A             ||"
+echo "	   ||                           ||"
+echo "	   ||            -|-            ||"
+echo "	   ||                           ||"
+echo "	   ||                           ||"
+echo "	   ||                           ||"
+echo "	   ||                           ||"
+echo "	   ||                   C       ||"
+echo "	   ||                           ||"
+echo "	   ||                           ||"
+echo "	   ||                           ||"
+echo "	   =============================="
+
+echo "hit RETURN to continue"
+read p1
+clear
+
+echo "Paratroops  are  launched in exactly  the same way,  except this"
+echo "time you use  the 'p' key  (p for paratroops).  Every shot costs"
+echo "one troop, and will kill  one troop in  the enemy square,  while"
+echo "every paratroop  costs  3  troops from  the  source  square, and"
+echo "arrives in the enemy square as a normal troop.  Be  careful with"
+echo "the  guns, because they  can kill  your troops  as  well  as the"
+echo "enemy's.   Guns  and  paratroops  are  called   with the command"
+echo "options '-guns' and '-para', each with an argument that controls"
+echo "the maximum range (in game squares).  For  example, try  out the"
+echo "following game."
+
+echo
+echo "> xbattle -black me -white you -board 10 -cell 64 -militia 5"
+echo ">                         -rbases 1 -guns 5 -para 5"
+echo
+
+echo
+echo "hit RETURN to start the game"
+read p1
+
+xbattle -black me -white you -board 10 -cell 64 -militia 5  -rbases 1  -guns 5 -para 5 &
+
+echo
+echo "hit RETURN to continue after game"
+read p1
+clear
+
+echo "Another set of options allow you to build and destroy the supply"
+echo "bases.  The option '-build <n>' lets you  build them by pointing"
+echo "to a game square which is completely full of troops and pressing"
+echo "the 'b' key (b for build).  This operation will cost you all the"
+echo "troops in  the square, and  will only build  a partial base- the"
+echo "operation will have to be repeated a number of times  before the"
+echo "base is complete and can go into production.   The total cost of"
+echo "building a base is <n> full troop squares.  "
+
+echo
+
+echo "Bases can be scuttled (destroyed) with the '-scuttle' option (no"
+echo "argument) by  again positioning   the  cursor on the    base and"
+echo "pressing the 's' key  (s for  scuttle).  Again, you will have to"
+echo "have some troops in the square,  and it may take several scuttle"
+echo "operations  to completely  destroy it, but  each operation costs"
+echo "only a single  troop,  and  is thus  much cheaper  than building"
+echo "them.  A base can be scuttled to  prevent it falling  into enemy"
+echo "hands."
+
+echo
+
+echo "Try building and scuttling a few bases in the next example.  Try"
+echo "doing a partial scuttle and then rebuilding again."
+echo
+echo "> xbattle -black me -white you -board 10 -cell 64 -hex"
+echo ">              -militia 5  -rbases 1  -build 4 -scuttle"
+
+
+echo
+echo "hit RETURN to start the game"
+read p1
+
+xbattle -black me -white you -board 10 -cell 64 -hex -militia 5  -rbases 1  -build 4 -scuttle &
+
+echo
+echo "hit RETURN to continue after game"
+read p1
+clear
+
+echo "Another way you can modify the game board during the  game is to"
+echo "fill or  dig, to raise  or lower the  elevation.  When used with"
+echo "'-sea', digging  creates a new square  of sea, while filling can"
+echo "fill one in.  Each operation costs  <n>  full troop squares, and"
+echo "is performed by putting  the cursor in  that square  and hitting"
+echo "'d' to dig.  To fill  in a sea, the troops  cannot march into it"
+echo "first,  so you must  do the next  best  thing- march your troops"
+echo "next to  the sea  and then command  them to  march into  it   by"
+echo "clicking a command vector to point to the sea,  then hit the 'f'"
+echo "key to fill  in.  The arguments for dig  and fill  must have the"
+echo "same value."
+echo
+echo "Try digging and filling a few seas in the next example.  "
+echo
+
+echo "> xbattle -black me -white you -board 10 -cell 64 -militia 5"
+echo ">                     -rbases 1 -sea 2 -dig 4 -fill 4"
+
+echo
+echo "hit RETURN to start the game"
+read p1
+
+xbattle -black me -white you -board 10 -cell 64 -militia 5  -rbases 1  -sea 2 -dig 4 -fill 4 &
+
+echo
+echo "hit RETURN to continue after game"
+read p1
+clear
+
+echo "When used with the '-hills' option, the  digging and filling can"
+echo "be used to  lower  or raise the   elevation to  create defensive"
+echo "fortifications.  In this  case, each  dig or fill costs only one"
+echo "full  troop square regardless of  the  value you  supply for the"
+echo "arguments -dig  and   -fill.   You must supply  dummy  arguments"
+echo "nevertheless.  Try this out in the next example."
+echo
+echo "> xbattle -black me -white you -board 10 -cell 64 -militia 5"
+echo ">                     -rbases 1 -hills 9 -dig 5 -fill 5"
+
+
+echo
+echo "hit RETURN to start the game"
+read p1
+
+xbattle -black me -white you -board 10 -cell 64 -militia 5  -rbases 1  -hills 9 -dig 2 -fill 2 &
+
+echo
+echo "hit RETURN to continue after game"
+read p1
+clear
+
+echo "Finally,  there is an  option  called  '-manage'  that works in"
+echo "conjunction with -guns,  -para,  -dig, -fill, and -build,  that"
+echo "allows  you to manage repeated execution  of those commands with"
+echo "a single command.  For  example,  with the combination  '-guns'"
+echo "and '-manage'  options, you can  initiate  an artillery barrage"
+echo "by using the 'G' key instead of the 'g'  key to aim  your guns."
+echo "The gun will shoot the same way as usual,  except that it will"
+echo "continue sending  additional shells to the same  target  as long"
+echo "as  the  source square is kept   resupplied.  If the supply is"
+echo "interrupted,  then  the barrage  will be  temporarily suspended,"
+echo "but will automatically resume when  fresh supplies arrive.  The"
+echo "other operations  work similarly, using  the upper-case version"
+echo "of the regular command key.  Managed operation is  indicated by"
+echo "the letters 'GUN' for gun, 'PAR' for para, 'DIG' for dig, 'FIL'"
+echo "for fill, and  'BLD' for  build,  which  appear in the  managed"
+echo "square.  Managed operation can be cancelled" either striking the"
+echo "'c' key in the managed square, or by  giving" the managed square"
+echo "a movement command."
+echo
+echo "The following example allows managed guns,  paratroops, digging,"
+echo "filling, and base building."
+
+echo
+echo "> xbattle -black me -white you -board 10 -cell 64 -militia 5"
+echo ">          -rbases 1  -dig 7 -fill 7 -guns 4 -para 4 -build 7"
+echo ">          -scuttle -manage"
+
+echo
+echo "hit RETURN to start the game"
+read p1
+clear
+
+xbattle -black me -white you -board 10 -cell 64 -militia 5 -rbases 1  -dig 7 -fill 7 -guns 4 -para 4 -build 7 -scuttle -manage &
+
+echo "You can bias a game to favor a player with less experience.  Not"
+echo "all xbattle parameters can be biased, but a good many can.  Here"
+echo "is an example."
+echo
+echo "> xbattle -options tribal.xbo -black { -fight 9 -move 9 } me"
+echo ">                     -white me -board 10 -manpos"
+echo
+
+echo "In this example the arguments  in the {braces}  between '-black'"
+echo "and 'me' apply only to black, not  to white.  In this  case, the"
+echo "black troops will move quickly  and have an  increased  fighting"
+echo "strength compared to white, who  has the default values of these"
+echo "parameters.  Note the spaces on either side  of the '{' and '}'."
+echo "Xbattle  options  are evaluated  sequentially,   therefore later"
+echo "options can overwrite   earlier options. If you wished  to set a"
+echo "default '-fight  3' for  all players except  black,  this option"
+echo "would have to be placed first in  the sequence in order to avoid"
+echo "overwriting the  biased  options set   for black.  Try   out the"
+echo "difference between these fight and move settings."
+
+echo
+echo "hit RETURN to start the game"
+read p1
+
+xbattle -options tribal.xbo -black { -fight 9 -move 9 } me -white me -board 10  -manpos&
+
+echo
+echo "hit RETURN to continue after game"
+read p1
+clear
+
+echo "Another  interesting dynamic parameter  called '-digin' dictates"
+echo "that  troops moving through open  country  move faster than when"
+echo "they  have to 'trip  over'  each other.  With this parameter, it"
+echo "takes  time for your troops  to 'dig in' at the  front; the more"
+echo "troops there are  in a square, the  slower the new  troops enter"
+echo "that square, rather like  the charging  of a capacitor.  Another"
+echo "option called 'hidden' makes the troop command vectors invisible"
+echo "to the   enemy, so that   the enemy  can only see    your  troop"
+echo "deployment, not  your marching   orders.  Another option  called"
+echo "'disrupt' will cause  your  troops to forget all  their marching"
+echo "orders as soon  as they are   under attack.  This will  make you"
+echo "have to  repeat your orders to them  when they panic in the heat"
+echo "of  battle.  These options  can all be biased,  as shown in  the"
+echo "next example.  Note that in  this case,  all three options serve"
+echo "to hinder black; his  troop convoys are  sluggish, he cannot see"
+echo "white's command vectors, and his supply lines can be cut  with a"
+echo "single momentary attack by white."
+echo
+echo "> xbattle -options tribal.xbo -black { -digin 9 -hidden } me"
+echo ">                -white { -disrupt } me -board 10  -manpos"
+
+echo
+echo "hit RETURN to start the game"
+read p1
+
+xbattle -options tribal.xbo -black { -digin 9 -hidden } me -white { -disrupt } me -board 10  -manpos&
+
+echo
+echo "hit RETURN to continue after game"
+read p1
+clear
+
+echo "There are a few alternative  ways  to command groups of your men"
+echo "to  march  simultaneously.   One is   controlled  by the  option"
+echo "'-march <n>'  whereby you  command your troops to start marching"
+echo "in a particular direction and continue until told  to stop.  The"
+echo "speed  is set  with the  argument <n>.  To  march  your  troops,"
+echo "position your mouse and hold down the shift key as you click.  A"
+echo "march command is displayed as a  double command vector, and such"
+echo "commands can be  set up on  empty  game  squares  to steer  your"
+echo "troops in more complex paths.  The  stop command can also be set"
+echo "by clicking in the center  of the square,  and is displayed as a"
+echo "small box.  If  the march is commenced  with  a shift-leftmouse,"
+echo "the troops will split if they cross another supply line, whereas"
+echo "when set with  the  middle mouse, they  will cross  over   other"
+echo "supply lines.  Try out the march option in the following game."
+echo
+echo "> xbattle -black me -militia 3 -march 5"
+echo
+echo "hit RETURN to start the game"
+read p1
+
+xbattle -black me -militia 3 -march 5&
+
+echo
+echo "hit RETURN to continue after game"
+read p1
+clear
+
+echo "Another  way to give  group commands to your troops  is with the"
+echo "'bound'  option.  When this option  is active, you can  give the"
+echo "same movement command   to  all  the troops  within  a  bounding"
+echo "rectangle defined as follows.  Click the  mouse, for instance to"
+echo "'march east' in a particular square, but hold the mouse down and"
+echo "drag it diagonally across other gamesquares to the square at the"
+echo "opposite corner of the  bounding rectangle before  releasing the"
+echo "button.   All the troops within  the    rectangle will obey  the"
+echo "command.  Try this option in the following game."
+echo
+echo "> xbattle -black me -militia 3 -bound"
+echo
+echo "hit RETURN to start the game"
+read p1
+
+xbattle -black me -militia 3 -bound&
+
+echo
+echo "hit RETURN to continue after game"
+read p1
+clear
+
+echo "If  you have  played an interesting game  you may wish to review"
+echo "the action afterwards to learn from your  mistakes.  This can be"
+echo "done with the '-store' option, which  will save all the graphics"
+echo "commands to a file.  The file can  be reviewed with  the -replay"
+echo "option.  The stored  file can be  enormous, especially for  long"
+echo "games on a  large  board, so   be careful.   If your    quota is"
+echo "exceeded during the game,  xbattle will quietly stop  writing to"
+echo "the store file,  but the game will  continue uninterrupted.  You"
+echo "will just miss the tail end of the battle on the replay."
+echo
+echo "We will  try to store a game  in the next  example:  move  your"
+echo "armies around the board in interesting formations, and then exit"
+echo "the game as usual.  Then we will watch the replay."
+echo
+echo "> xbattle -black me -white you -board 10 -farms 5 -militia 5"
+echo ">                   -store xbattle.xba"
+echo
+
+echo
+echo "hit RETURN to start the game"
+read p1
+
+
+xbattle -black me -white you -board 13 -farms 5 -militia 5 -store xbattle.xba&
+
+echo
+echo "hit RETURN to continue after game"
+read p1
+clear
+
+echo "To replay the game, all you have to  do is  give a display name,"
+echo "the other options will not be needed.  To flag the  display name"
+echo "you will have to give a dummy team color,  for example '-black',"
+echo "although this  argument will  actually be  ignored, so you could"
+echo "just as well have used '-white', or '-red' for that matter.  You"
+echo "must however give the display name on which the  replay is to be"
+echo "viewed."
+
+echo
+
+echo "The replay file stores none of the actual game  parameters, only"
+echo "the  graphics commands,  and  in  replay mode xbattle   does not"
+echo "respond to any of the normal commands, it is  even impossible to"
+echo "quit from the replay after it is done (sorry, we have not gotten"
+echo "around to  that yet)  so you will have to  kill the window  some"
+echo "other way, or  just hide it  behind another  window for now.  We"
+echo "will   use  the  '-manpos' option  so  you can place  the window"
+echo "conveniently."
+
+echo
+echo "> xbattle -black me -manpos -replay xbattle.xba"
+echo
+
+echo
+echo "hit RETURN to start the replay"
+read p1
+
+xbattle -black me -manpos -replay xbattle.xba&
+
+echo
+echo "hit RETURN to continue after game"
+read p1
+clear
+
+echo "The replayed  game board  will  not respond to any commands, not"
+echo "even the control-c exit key, so you will have to dispose of it's"
+echo "xwindow by other means (such as a  kill  window command, or kill"
+echo "the process)."
+echo
+echo "We  will  now  delete  the  saved file  to conserve  disk space."
+echo "Remember to do this, since these files can be very big.  On unix"
+echo "systems it is convenient to save your games to /tmp/xbattle.xba,"
+echo "the system temporary directory."
+
+echo
+echo "> rm xbattle.xba"
+echo
+
+rm xbattle.xba
+
+echo "It is also possible to save the state  of  the game at any point"
+echo "during the combat, and to continue the game from that point some"
+echo "time in the future.  This is done by pressing 'control-p' in the"
+echo "text  area      during   the game.    The  game  will   continue"
+echo "uninterrupted, and the  only  acknowledgement  you will see is a"
+echo "print out of some game  statistics on the  window where the game"
+echo "was started.  Later we will show you how to resume the game."
+
+echo
+
+echo "In the  next example, do some  moves,  then press 'control-p' in"
+echo "the text area, then do  some more moves  and then exit normally."
+echo "You will see that when we load the game state file the game will"
+echo "resume from the point where you pressed the control-p."
+
+echo
+echo "> xbattle -black me -white you -board 10 -farms 5 -militia 5"
+echo
+
+echo
+echo "hit RETURN to start the game"
+read p1
+
+xbattle -black me -white you -board 10 -farms 5 -militia 5
+
+echo
+echo "hit RETURN to continue after game"
+read p1
+clear
+
+echo
+echo "Now we will resume the game from the point  where  you saved it."
+echo "by using  the '-load' option.  This  option sets several options"
+echo "automatically from the file, but  must have other options set in"
+echo "the  command  line to   match  the original  parameters that the"
+echo "original  game used.   Read the  manual very   carefully on this"
+echo "subject, as  it gets  quite complicated.  In future  releases of"
+echo "xbattle we will probably have cleaned this up somewhat."
+
+echo
+echo "> xbattle -black me -white you -board 10 -load"
+
+echo
+echo "hit RETURN to start the replay"
+read p1
+
+xbattle -black me -white you -board 10 -load&
+
+echo
+echo "hit RETURN to continue after the resumed game"
+read p1
+clear
+
+echo "It  is possible  to  edit the  stored file  and  to change  many"
+echo "features of the terrain,  or to set  up new armies, and create a"
+echo "whole battle scenario in advance.  This is done with the command"
+echo "option '-edit', which completely redefines the xbattle controls,"
+echo "and disables all normal playing.  When editing an existing file,"
+echo "you must be very careful to call exactly  the same options as in"
+echo "the original file- number of teams and team colors, hills, seas,"
+echo "board size, square size, etc. otherwise  unexpected things might"
+echo "happen.  The edit feature is brand new, and still has a few bugs"
+echo "in it.  Let  us therefore edit a completely  new file, and allow"
+echo "for hills, seas, and two armies.  "
+
+echo
+
+echo "When you start this game, place the window to  the  side so that"
+echo "you  will be  able to see  the  menu that  describes the editing"
+echo "commands.  Try them out, and  remember to finish with 'd'  (dump"
+echo "to file) and 'e' (exit).  Afterwards,  we will play  on your new"
+echo "terrain map."
+
+echo
+echo "> xbattle -edit -manpos -black me -white you -board 10"
+echo "> -hills 5 -sea 5"
+echo
+echo "hit RETURN to start the editing"
+read p1
+
+xbattle -edit -manpos -black me -white you -board 10 -hills 5 -sea 5&
+
+echo "EDIT MODE COMMANDS"
+echo "=================="
+echo
+echo "      left button:     lower terrain by one notch (sea lowest)"
+echo "      middle button:   raise  terrain  by  one  notch  (sea lowest)"
+echo "      right button:    toggle between lowest and mid terrain"
+echo ""
+echo "      c:    create city (growth = 100)"
+echo "      t:    create town (growth = 80)"
+echo "      v:    create village (growth = 60)"
+echo "      k:    increase size of city by 5 percent"
+echo "      j:    decrease size of city by 5 percent"
+echo "      s:    scuttle city - remove 36 degrees of arc"
+echo "      b:    build city - add 36 degrees of arc"
+echo ""
+echo "      0-9:  create troop square with troops of current color"
+echo "      [:    decrease troop amount by 1"
+echo "      ]:    increase troop amount by 1"
+echo "      r:    change current color"
+echo "      f:    change color of existent troop square"
+echo "      d:    dump board with name <filename>"
+echo "      l:    load board with name <filename>"
+echo "      e:    exit"
+echo ""
+echo " FINISH EDITING with 'd' (dump) followed by 'e' (exit)"
+echo
+echo "hit RETURN after editing"
+read p1
+clear
+
+echo "And now we will play on the game board you just created by using"
+echo "the    '-load'   option.    This   looks for   the  file  called"
+echo "'xbattle.xbt', unless it is given another filename."
+
+echo
+echo ">  xbattle -load -black me -white you  -board 10 -hills 5 -sea 5"
+
+echo
+echo "hit RETURN to start the game"
+read p1
+
+xbattle -load -black me -white you  -board 10 -hills 5 -sea 5&
+
+echo
+echo "hit RETURN to continue after game"
+read p1
+clear
+
+echo "You have  now been introduced to  just about all of  the options"
+echo "available  in xbattle.  We have  skipped over  some  of the more"
+echo "obscure variations of the horizon option (map, basemap, localmap"
+echo "etc.) but you can read about these  in  the man page  if you are"
+echo "interested. Also in the man page is a description of a number of"
+echo "different compile-time options sent  in  by xbattlers around the"
+echo "world, including different  mouse button definitions,  different"
+echo "text lines, different command vectors, and so forth.  Finally, I"
+echo "encourage  you to try  'skirmish.xbo', an options file used with"
+echo "the   '-options'  argument.  This   creates  a  fast paced  game"
+echo "employing a  good   many   of the   options  introduced  in this"
+echo "tutorial.  Try your own variations, and above all,"
+echo
+echo "           Happy xbattling!"
+
+echo "================= END OF XBATTLE TUTORIAL ==================="

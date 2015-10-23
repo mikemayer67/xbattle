@@ -1,0 +1,92 @@
+-red		you
+-red_white	you
+-no_area
+-attack
+-armies		3
+-basemap
+-bases		3
+-board		20
+-boardx		20
+-boardy		18
+-border		5
+-no_bound
+-build		5
+-build_cost	18
+-build_cost	0.90
+-build_limit	10
+-cell		28
+-color		blah 250 87 220
+-color_inverse  blah black
+-decay		3
+-no_diamond
+-dig		4
+-dig_cost	15
+-dig_cost	0.85
+-digin		1
+-disrupt
+-draw		1
+-dump		xbattle.xbt
+-no_edit
+-erode		20
+-erode_thresh	5
+-farms		5
+-fight		5
+-fill		4
+-fill_cost	16
+-fill_cost	0.75
+-no_forest	3
+-forest_color	0 0 255 0
+-forest_tones	5
+-grid
+-guns		5
+-guns_cost	3
+-guns_damage	1
+-no_help
+-hex
+-hidden
+-hills		4
+-hill_color	2 200 220 100
+-hill_tones 	5
+-horizon	2
+-no_load	xbattle.xbt
+-localmap
+-manage
+-manpos
+-map
+-march		5
+-maxval		20
+-militia	5
+-move		5
+-nospigot	5
+-no_octagon
+-no_options	tribal.xbo
+-overwrite
+-para		4
+-para_cost	8
+-para_damage	1
+-peaks		5
+-peak_bias	1.0
+-rbases		3
+-rbase_range	2
+-repeat
+-no_replay	xbattle.xba
+-reserve
+-scuttle
+-scuttle_cost	4
+-scuttle_cost	0.10
+-sea		6
+-sea_block
+-sea_color	0 0 0 255
+-sea_tones	4
+-sea_value	0.849
+-seed		120123
+-speed		5
+-no_square
+-stipple	blah 0xff 0x3e 0xbb 0x22 0x9a 0xa0 0xdd 0x48
+-store		xbattle.xba
+-towns		3
+-no_triangle
+-trough_bias	1.0
+-xpos		0
+-ypos		0
+-wrap

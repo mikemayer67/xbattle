@@ -1,0 +1,6 @@
+-color back 0 0 0
+-color mark 0 200 255
+-no_forest
+-no_hills
+-sea_tones 1
+-sea_color 0 0 200 255

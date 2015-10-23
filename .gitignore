@@ -1,0 +1,8 @@
+*.o
+xbattle_osx
+xbattle
+Makefile
+configure
+config.*
+!*.in
+

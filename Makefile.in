@@ -1,0 +1,56 @@
+CC=@CXX@
+CFLAGS=@CFLAGS@
+LDFLAGS=@LDFLAGS@ -L@XLIB@
+CPPFLAGS=@CPPFLAGS@ -I@XINC@
+INSTALL=@INSTALL@
+MKDIR=@MKDIR_P@
+
+TARGET = @PACKAGE_NAME@
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+bindir=@bindir@
+datarootdir=@datarootdir@
+datadir=@datadir@
+manvolume=6
+mandir=@mandir@/man$(manvolume)
+
+SRC = $(wildcard src/*.cc)
+OBJ = $(SRC:src/%.cc=obj/%.o)
+LIB = -lX11 -lm
+
+all: $(TARGET)
+
+$(TARGET): $(OBJ)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^ $(LIB)
+
+$(OBJ) : obj/%.o : src/%.cc
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+
+.PHONY: clean clobber
+
+clean:
+	$(RM) obj/*.o *~ 
+
+clobber: clean
+	$(RM) $(TARGET)
+
+install: $(TARGET)
+	-$(INSTALL) $(TARGET) $(DESTDIR)$(bindir)
+	-$(MKDIR) $(DESTDIR)$(datadir)/$(TARGET)
+	-$(MKDIR) $(DESTDIR)$(datadir)/$(TARGET)/xbas
+	-$(MKDIR) $(DESTDIR)$(datadir)/$(TARGET)/xbos
+	-$(MKDIR) $(DESTDIR)$(datadir)/$(TARGET)/xbts
+	-$(MKDIR) $(DESTDIR)$(mandir)
+	-$(INSTALL) -m755 doc/tutorial*   $(DESTDIR)$(datadir)/$(TARGET)
+	-$(INSTALL) -m644 share/*.dot     $(DESTDIR)$(datadir)/$(TARGET)
+	-$(INSTALL) -m644 share/*.xba     $(DESTDIR)$(datadir)/$(TARGET)/xbas
+	-$(INSTALL) -m644 share/*.xbo     $(DESTDIR)$(datadir)/$(TARGET)/xbos
+	-$(INSTALL) -m644 share/*.xbt     $(DESTDIR)$(datadir)/$(TARGET)/xbts
+	-$(INSTALL) -m644 doc/xbattle.man $(DESTDIR)$(mandir)/xbattle.$(manvolume)
+
+uninstall:
+	-$(RM) $(DESTDIR)$(bindir)/$(TARGET)
+	-$(RM) -rf $(DESTDIR)$(datadir)/$(TARGET)
+	-$(RM) $(DESTDIR)$(mandir)/xbattle.*
+

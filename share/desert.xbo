@@ -1,0 +1,7 @@
+-hills 0
+-hill_tones 5
+-hill_color 0 224 224 165
+-hill_color 4 200 175 100
+-peak_bias 0.7
+-no_sea
+-no_forest

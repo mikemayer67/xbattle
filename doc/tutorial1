@@ -1,0 +1,416 @@
+#! /bin/sh
+
+echo "=================== XBATTLE TUTORIAL ========================" 
+echo "RETURN to continue"
+read p1
+clear
+echo "The xbattle  game  board is a grid  of  squares that can contain"
+echo "troops of different  colors (or shades  of  gray if  you  have a"
+echo "monochrome monitor). Here is a small xbattle game board that was"
+echo "started with the command..."
+echo
+echo "> xbattle -black me -board 5 -cell 64 -manpos -armies 1"
+
+xbattle -black me -board 5 -cell 64  -manpos -armies 1&
+
+echo
+echo "This means: run xbattle, my color is  black, the board size is 5"
+echo "x 5 game squares, and each game square is 64 x 64 pixels, use"
+echo "manual positioning of the window, and give me one army."
+echo
+echo "RETURN to continue"
+read p1
+clear
+
+echo "The square in the  middle  represents an army  of  black troops,"
+echo "which you can command by clicking with the mouse.  The direction"
+echo "in which the  troops march  depends on where  in the game square"
+echo "you click the  mouse- each  game square  is divided into regions"
+echo "like this..."
+echo
+echo "       GAME SQUARE"
+echo "========================="
+echo "|| up & |march | up &  ||"
+echo "|| left |  up  | right ||"
+echo "||------|------|-------||"
+echo "||march | stop | march ||"
+echo "|| left |      | right ||"
+echo "||------|------|-------||"
+echo "||down &|march |down & ||"
+echo "|| left | down | right ||"
+echo "========================="
+echo
+echo "So,  for instance, to march  to the right,   you click near  the"
+echo "right edge of the game square, and you will see a command vector"
+echo "appear, pointing right.   Your  troop  square  will now  rapidly"
+echo "shrink, and  the neighboring   square will  grow, as  the troops"
+echo "march from one square to the next.  If you click near the corner"
+echo "of  the game  square  the troops  will split   and  move in both"
+echo "directions  at the same   time.   March  your troops  around the"
+echo "board to get the feel of the commands."
+echo
+echo "The left mouse  button  toggles the command  vectors on or  off,"
+echo "while  the  middle mouse  button clears all command vectors  and"
+echo "instates the new one.  Try out both these command modes."
+echo
+echo "RETURN to continue"
+read p1
+clear
+echo "There is a text line under the game board. Commands issued while"
+echo "the mouse is in the text area will be interpreted differently to"
+echo "commands issued on the  game  board.  Position your mouse in the"
+echo "text area, and  type control-c, (i.e. hold  the control  key and"
+echo "type c) and  the game should quit.  Quit   the game  before  you"
+echo "continue."
+echo
+echo "RETURN to continue"
+read p1
+clear
+echo
+echo "Now we will start a  game with two  opposing armies,  black  and"
+echo "white, and you can practice attacking the enemy.   The game will"
+echo "be started with the command line..."
+echo
+echo "> xbattle -black me -white me -board 5 -manpos -armies 3"
+echo
+echo "This time,  the board  is  5 x  5,  and the square   size is the"
+echo "default size.  The argument '-armies 3' creates three armies for"
+echo "each team and arranges them in opposing ranks.  You will have to"
+echo "position two windows this time, black and white, place them next"
+echo "to each other so that you can see them both.   You will  only be"
+echo "able to command the black  troops in the  black window, and  the"
+echo "white troops from the white  window,  although both windows will"
+echo "show the same game board.  Later on, you will be opening the two"
+echo "windows on separate displays to play against an opponent on that"
+echo "display; for now, you will be controlling both sides."
+echo
+echo "You  can   also  choose  '-light'  and  '-dark'  team colors  on"
+echo "monochrome monitors, while color  monitors will  display '-red',"
+echo "'-green', '-blue', as well as the  monochrome ones.  If  you are"
+echo "playing  between color and   monochrome  monitors, you  can even"
+echo "define hybrid colors  such as  '-red_black' (color name  first),"
+echo "which will appear red  on the color  and black on the monochrome"
+echo "monitors.   Pure colors  like   '-red' will appear on monochrome"
+echo "monitors with a letter 'R' in each square."
+echo
+echo "Actually, you can choose  from any of the  colors defined in the"
+echo "file /usr/lib/X11/rgb.txt,which includes bizzare entries such as"
+echo "'LavenderBlush', 'MistyRose', 'PapayaWhip'  as well as  the more"
+echo "usual colors.  Grey    tones must   be  defined   in  the   file"
+echo ".HOME/.xbattle, which is  your xbattle customization file.  Each"
+echo "gray  tone must have  a pixmap    pattern assigned to   it.  The"
+echo ".xbattle file supplied  with  the game  defines the  -light  and"
+echo "-dark grey  tones, as well as -gator  and -brick textures, among"
+echo "others."
+echo
+echo "RETURN to continue"
+read p1
+clear
+
+xbattle -black me -white me -board 5 -manpos -armies 3&
+
+echo "You can see the two  battle lines drawn  up opposite each other."
+echo "Command one of the  black squares to  march into a white square."
+echo "You will see that with  equal  initial strength, the attacker is"
+echo "under  a disadvantage and  suffers  much more loss, although the"
+echo "white might suffer some loss from the attack."
+echo
+echo "Now try something  else- in  the white window, command the white"
+echo "troops  to  scatter all over   the  game board, splitting   into"
+echo "smaller sections by clicking  near the  corners.   Then form the"
+echo "remaining  black squares into a column,  and command the head of"
+echo "the column to attack the smallest white squares one by one.  You"
+echo "will see that  this has a  much greater effect.  During  battle,"
+echo "both sides can suffer damage,  but when the  opposing forces are"
+echo "unequal, the smaller force suffers  much greater  losses, so you"
+echo "should always   strive for local  superiority   to minimize your"
+echo "losses."
+echo
+echo "Try arranging flanking attacks by surrounding white squares from"
+echo "two or more sides, and  then attacking simultaneously.  You must"
+echo "click quickly to   assure  a  simultaneous attack in    order to"
+echo "achieve maximum effect.  Here is another rule of xbattle- that a"
+echo "simultaneous assault from two  or more directions  increases the"
+echo "effectiveness of the attack.  "
+echo
+echo "Notice that during an attack,  both colors are displayed  in the"
+echo "game square in their proper proportions, with an X battle symbol"
+echo "as long as the battle continues."
+echo
+echo "RETURN to continue"
+read p1
+clear
+
+echo "Notice that the text  area now contains two  lines, one for each"
+echo "team.  Position your mouse in the text area and  type some keys-"
+echo "you will see the characters appearing on both windows.  When the"
+echo "opposing teams are  run from remote sites, the  text line can be"
+echo "used to communicate between the windows."
+echo
+echo "Now, type control-c in both windows and quit the game before you"
+echo "continue."
+echo
+echo "RETURN to continue"
+read p1
+clear
+
+echo "We will now experiment with resupply- in the next  game you will"
+echo "see circles   in some  of  the   game  squares.    These circles"
+echo "represent supply sources, and if you  capture one, it becomes an"
+echo "endless supply of  additional troops   of your color.  The  game"
+echo "board can soon be swamped by the excess troops if you  move them"
+echo "around."
+echo 
+echo "This game was started with the command..."
+echo
+echo "> xbattle -red me -board 6 -manpos -armies 1 -towns 5"
+echo
+echo "where  the argument  -towns 5  provided  for randomly positioned"
+echo "towns (the circles) with  randomly varying sizes with  a density"
+echo "of  5.  Almost all arguments in  xbattle range between 0 and 10,"
+echo "so that 5 is generally a mid value.  Notice  also that this time"
+echo "your color is given as red.  If you are  on a color monitor, you"
+echo "will  see  your troops as   red.  If  you   are  on a monochrome"
+echo "monitor, they  will  be black, with  a letter 'R'  in each troop"
+echo "square to denote the color."
+echo
+echo "Quit the  game  before you continue"
+echo
+xbattle -red me -board 6 -manpos -armies 1 -towns 5&
+echo
+echo "RETURN to continue"
+read p1
+clear
+
+echo "In the next example we  will add  a certain decay to the troops,"
+echo "which means that the troops will consume their  provisions  at a"
+echo "rate proportional to  the number of  troops.  That  means that a"
+echo "single supply base can only  support a certain number of troops,"
+echo "so that the  number of troops  will only  grow until it  reaches"
+echo "that size.  Try to generate as many  troops as you  can from the"
+echo "single supply base.  This game was started with the command..."
+echo
+echo "> xbattle -blue_black me -board 6 -manpos -rbases 1 -decay 10"
+echo ">          -speed 10"
+echo
+xbattle -blue_black me -board 6 -manpos -rbases 1 -decay 10 -speed 10&
+echo "In this game we use the argument '-rbases 1' which will create 1"
+echo "full sized base for each team and position them randomly  on the"
+echo "game  board.   Notice  also  that this  time  we   use the color"
+echo "'blue_black', which means blue on a color monitor but black on a"
+echo "monochrome monitor.  The color name must come first."
+echo
+echo "Notice that the shorter the supply line, the larger  the size of"
+echo "the army that can be maintained.   This is because of the losses"
+echo "along the supply line.  Also,  troops  cut  off from the  supply"
+echo "base will  wither   away   and  die.  In  this  example  we also"
+echo "increased the speed of  the simulation with  the argument -speed"
+echo "10, which  is  normally set to  the default -speed 5.   quit the"
+echo "game before you continue"
+echo
+echo "RETURN to continue"
+read p1
+clear
+
+echo "In the next example we will use another form of resupply, called"
+echo "farms.  Here, every square on the gameboard produces troops at a"
+echo "steady rate, controlled by the size of the argument, so that the"
+echo "larger  the area that you occupy,  the larger the  army that you"
+echo "can sustain.  This simulation was started with the command..."
+echo
+echo "> xbattle -light me -board 6 -manpos -farms 9 -militia 9"
+echo ">          -decay 5 -speed 10 -repeat"
+echo
+echo "and in this case we make use  of another option, called militia,"
+echo "which creates  troops of random size in  random locations on the"
+echo "game board.  Again, try to  create  the largest  army you can by"
+echo "funneling the   production  of   all  the farms  into   a single"
+echo "location.  This simulates  the large  scale dynamics of   troops"
+echo "living  off  the fat  of    the land.  Also,   in  this game, we"
+echo "demonstrate the -repeat option- if you corner-click one  army to"
+echo "march north-east,  for  example,  then  rapidly click  in  other"
+echo "squares  using the  RIGHT mouse   button, the north-east command"
+echo "will be repeated in these squares.  For multiple repeated clicks"
+echo "the -repeat option can save you a lot of time aiming  the mouse."
+echo "Note also that we use the color 'light' which  means light gray."
+echo "There are four monochrome colors, black, white, light and dark."
+echo
+echo "Quit the game before you continue."
+xbattle -light me -board 6 -cell 48 -manpos -farms 9 -militia 9 -decay 5 -speed 10 -repeat&
+echo
+echo "RETURN to continue"
+read p1
+clear
+
+echo "In the next examples, we will demonstrate three types of terrain"
+echo "that can be used with xbattle:  seas,  hills, and forests.  Seas"
+echo "are simply regions that cannot be traversed by  land troops, and"
+echo "thus can  be  used  for  defensive strategy.   The  command line"
+echo "argument -seas  5 will create random  seas with  a density of 5."
+echo "We will also demonstrate the -hex  option, which creates a board"
+echo "of hexagons rather than squares,  but the commands work  in  the"
+echo "same way."
+echo
+echo "Quit the game before you continue."
+echo
+echo "> xbattle -black me -farms 5 -militia 5 -decay 5 -sea 5 -hex"
+echo
+echo
+echo "RETURN to start the game"
+read p1
+clear
+
+xbattle -black me -farms 5 -militia 5 -decay 5 -sea 5 -hex&
+
+echo
+echo "Quit the game before you continue."
+read p1
+clear
+
+echo "Hills are represented  as various shades  of gray on monochrome"
+echo "monitors, or shades  of green on  color monitors.  Progress  up"
+echo "hills is much slower than on the level, but faster again on the"
+echo "way  down.  The  steepness of   the hills  is  controled by the"
+echo "argument."
+echo
+echo "Quit the game before you continue."
+echo
+echo "> xbattle -black me -farms 5 -militia 5 -decay 5 -hills 9 -hex"
+echo
+echo
+echo "RETURN to start the game"
+read p1
+clear
+
+xbattle -black me -farms 5 -militia 5 -decay 5 -hills 9  -hex&
+
+echo
+echo "RETURN to continue"
+read p1
+clear
+
+echo "You may have noticed that when you run xbattle, it always prints"
+echo "something like 'seed:  714326158'.   This is the  random  number"
+echo "seed that xbattle uses to initialize all the random  features in"
+echo "the game. By default, xbattle  generates a new  seed every game."
+echo "but you can specify a particular  seed with the parameter '-seed"
+echo "<n>' in order to exactly recreate a particular game.  Be sure to"
+echo "use exactly the same parameters as the original  game as well as"
+echo "the same seed."
+echo
+echo "Now,  we   will  demonstrate the  horizon  option  whereby enemy"
+echo "activity is only seen when they are within a specified number of"
+echo "game squares  from  the  nearest friendly  force,   the argument"
+echo "determines  the  range of visibility,  in  game  squares, with a"
+echo "default  of 2 if   no argument is supplied.   Send  out scouting"
+echo "parties from   the magenta_black   bases to search  out the  four"
+echo "hidden  cyanwhite bases.  In   this   example we use  the  dummy"
+echo "argument 'you' to represent a non-existant cyanwhite display for"
+echo "the purpose of testing.  In actual play against an opponent, you"
+echo "will have to specify an actual x display."
+echo
+echo "> xbattle -magenta_black me -cyanwhite you -rbases 4"
+echo ">             -horizon -hex"
+echo
+echo "Quit the game before you continue."
+echo
+echo "RETURN to start the game"
+read p1
+clear
+
+xbattle -magenta_black me -cyanwhite you -rbases 4 -horizon -hex&
+
+echo
+echo "RETURN to continue"
+read p1
+clear
+
+echo "You  can save   yourself the trouble  of typing  in a   bunch of"
+echo "command options  if you  create an  options file,  and call that"
+echo "file   when running xbattle.  A   couple   of  options files are"
+echo "supplied   with xbattle, and you   can  create  your  own.   For"
+echo "example, the file 'tribal.xbo' contains the options..."
+echo
+echo " -decay 2"
+echo " -sea 8"
+echo " -cell 32"
+echo " -board 24"
+echo " -farms 7"
+echo " -militia 10"
+echo " -repeat"
+echo " -fill 4"
+echo " -dig 4"
+echo " -area"
+echo " -attack"
+echo
+echo "so you can call all these options with the command..."
+echo
+echo "> xbattle ... -options tribal.xbo ..."
+echo
+echo
+echo "The tribal options create an interesting scenario  starting with"
+echo "a mad rush to gain territory followed by  a plodding battle much"
+echo "like WW1 trench warfare.  It introduces two new options, -attack"
+echo "and -area.  The -attack  option  lets  you launch a simultaneous"
+echo "attack on  an enemy square from  all adjacent  squares by use of"
+echo "the 'a' key.  First surround the enemy,  then point at the enemy"
+echo "square and   press  'a'.    The   -area  option    changes   the"
+echo "representation of troop squares so that the number  of troops is"
+echo "proportional to the area of the  square, rather  than the length"
+echo "of the side, which is the default.   Practice occupying a corner"
+echo "of the game board and clearing out all stray  enemy troops.  Two"
+echo "more options, -dig  and -fill,   will  be discussed  in the next"
+echo "tutorial."
+echo
+echo "> xbattle -black me -white you -options tribal.xbo &"
+echo
+echo "RETURN to start the game"
+read p1
+clear
+
+xbattle -black me -white you -options tribal.xbo &
+
+echo
+echo "RETURN to continue"
+read p1
+clear
+
+echo "In order to play  against a  real opponent, you must specify the"
+echo "display on which he will  be playing.  One  way to discover this"
+echo "is by use of the unix command 'who'.  On my machine this command"
+echo "produces a listing like this..."
+echo
+echo " slehar   ttyp0   Jan 10 10:19   (cnsxk.bu.edu:0.0)"
+echo " slehar   ttyp1   Jan 10 10:19   (cnsxk.bu.edu:0.0)"
+echo " lesher   ttyp2   Jan  7 10:05   (charles:0.0)"
+echo " slehar   ttyp5   Jan 10 16:47   (unix:0.0)"
+echo " slehar   ttyp6   Jan 10 16:47   (unix:0.0)"
+echo
+echo "which  tells   me    (slehar)  that   my   xdisplay  is   called"
+echo "cnsxk.bu.edu:0.0, or just cnsxk.  I could start  an xbattle with"
+echo "lesher using the command"
+echo
+echo "> xbattle -black me -white charles ..."
+echo 
+echo "supplying any command options I  might choose.  Alternatively, I"
+echo "could use  cnsxk instead of  'me'  for my  own display."
+
+echo
+echo "RETURN to continue"
+read p1
+clear
+
+echo "Play a few games with some real opponents before going on to the"
+echo "next tutorial.  If playing against more experienced players, set"
+echo "the  '-speed' parameter  very  low, like  1, or even  fractional"
+echo "values like 0.5, to generate  a game  of strategy and intellect,"
+echo "where the  manual skill of  rapid  clicking is  not the dominant"
+echo "factor in the game.  In the next tutorial  you will learn how to"
+echo "bias games, setting  game parameters differently for  individual"
+echo "players."
+echo
+echo "       Good luck, and happy xbattling!"
+echo
+echo
+echo
+echo "================= END OF XBATTLE TUTORIAL ==================="

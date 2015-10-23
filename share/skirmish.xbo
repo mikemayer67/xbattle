@@ -1,0 +1,18 @@
+-guns 5
+-para 5
+-decay 2
+-cell 28
+-board 20
+-boardx 26
+-sea 3
+-rbases 5
+-fill 4
+-dig 4
+-scuttle
+-scuttle_cost 5
+-build 8
+-reserve
+-repeat
+-march 4
+-hex
+-horizon 2

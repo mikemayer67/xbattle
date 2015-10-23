@@ -1,0 +1,40 @@
+
+XBATTLE 6.0.1 INSTALLATION
+
+To compile xbattle, take one of these two approaches.
+
+  If you have "xmkmf" on your system:
+    (1) Edit IMakefile to ...
+            set DEFAULT_XBO_DIR to default option file directory 
+            set DEFAULT_XBT_DIR to default load/edit file directory 
+            set DEFAULT_XBA_DIR to default replay file directory 
+    (2) Type "xmkmf"
+    (3) Type "make"
+
+  If you do not have "xmkmf" on your system:
+    (1) Type "cp makefile.std makefile"
+    (2) Edit makefile to ...
+            accomodate your system includes and/or libraries
+            set DEFAULT_XBO_DIR to default option file directory 
+            set DEFAULT_XBT_DIR to default load/edit file directory 
+            set DEFAULT_XBA_DIR to default replay file directory 
+    (3) Type "make"
+
+Once xbattle has been compiled ...
+
+  If you want xbattle to always use a default file:
+    (1) Edit xbattle.dot as appropriate
+    (2) Type "cp xbattle.dot ~your_login/.xbattle"
+
+  If you want to set up the xbattle man page, and you have root privileges:
+    (1) Copy xbattle.man to games/demos man directory (usually /usr/man/man6)
+           Type "cp xbattle.man /usr/man/man6/xbattle.6"
+    (2) Update the abbreviated man page index.  On most systems:
+           Type "catman -w"
+        Alternatively, you can always use "man -F xbattle", which will
+        force man to explicitly search for the man page.
+
+  If you want to set up the xbattle man page, and you aren't root:
+    (1) Copy xbattle.man to your personal man directory
+    (2) Make sure your personal man directory is listed in your MANPATH
+    (3) Update man page index (see above) or access with "man -F xbattle"

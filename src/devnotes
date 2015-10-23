@@ -1,0 +1,7 @@
+Fix OPTION_DIG_COST and OPTION_FILL_COST to be side based.
+
+Change CELL, XPOS, and YPOS to be player based.
+
+-color, -inversecolor, -help  
+
+
