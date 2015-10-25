@@ -1,9 +1,10 @@
 CC=@CXX@
 CFLAGS=@CFLAGS@
 LDFLAGS=@LDFLAGS@ -L@XLIB@
-CPPFLAGS=@CPPFLAGS@ -I@XINC@
+CPPFLAGS=@CPPFLAGS@ -I@XINC@ -I.
 INSTALL=@INSTALL@
 MKDIR=@MKDIR_P@
+RMDIR=$(RM) -r
 
 TARGET = @PACKAGE_NAME@
 
@@ -21,8 +22,11 @@ LIB = -lX11 -lm
 
 all: $(TARGET)
 
-$(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^ $(LIB)
+obj:
+	-$(MKDIR) $@
+
+$(TARGET): obj $(OBJ)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJ) $(LIB)
 
 $(OBJ) : obj/%.o : src/%.cc
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
@@ -30,7 +34,8 @@ $(OBJ) : obj/%.o : src/%.cc
 .PHONY: clean clobber
 
 clean:
-	$(RM) obj/*.o *~ 
+	$(RM) obj/*.o *~
+	$(RMDIR) obj
 
 clobber: clean
 	$(RM) $(TARGET)
@@ -51,6 +56,6 @@ install: $(TARGET)
 
 uninstall:
 	-$(RM) $(DESTDIR)$(bindir)/$(TARGET)
-	-$(RM) -rf $(DESTDIR)$(datadir)/$(TARGET)
+	-$(RMDIR) $(DESTDIR)$(datadir)/$(TARGET)
 	-$(RM) $(DESTDIR)$(mandir)/xbattle.*
 
