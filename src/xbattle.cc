@@ -1,17 +1,30 @@
+#include "xbattle.h"
+
 #include <iostream>
 #include <exception>
-#include "CommandLine.h"
 
 int main(int argc,const char **argv)
 {
   try
   {
-    CommandLine cmd_line(argc,argv);
-    std::cout << "done" << std::endl;
+    XBattle xbattle(argc,argv);
+    xbattle.run();
   }
   catch( std::runtime_error &e )
   {
     std::cerr << std::endl << "Sorry: " << e.what() << std::endl << std::endl;
   }
   return 0;
+}
+
+
+XBattle::XBattle(int argc,const char **argv)
+  : _command_line( argc, argv)
+{
+  _options.init( _command_line.args() );
+}
+
+void XBattle::run(void)
+{
+  std::cout << "done" << std::endl;
 }

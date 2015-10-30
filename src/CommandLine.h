@@ -25,25 +25,27 @@
 //     This is handled by the Options class (and its cohorts).
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Util.h"
+#include "types.h"
 
 class CommandLine
 {
   public:
     CommandLine(int argc,const char **argv);
 
-    const std::string &proc(void) const { return _proc; }
+    const std::string  &proc(void) const { return _proc; }
+    const StringList_t &args(void) const { return _args; }
 
-    std::string find_file( std::string file ) const;
+    std::string find_file ( std::string file ) const;
     std::string rel_to_abs( std::string path ) const;
 
   private:
-    std::string _proc;
-    std::string _path;
-    std::string _cwd;
-    StringList_t  _args;
+    std::string  _proc;
+    StringList_t _args;
 
-    StringList_t  _filePath;
+    std::string  _procDir;
+    std::string  _cwd;
+
+    StringList_t _filePath;
 };
 
 

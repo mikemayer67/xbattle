@@ -2,16 +2,18 @@
 // See CommandLin.h for a description of this class
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "commandline.h"
+#include "util.h"
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <exception>
 
-#include "CommandLine.h"
-
 using namespace std;
 
-StringList_t fix_brackets(StringList_t raw);
+StringList_t fix_brackets(StringList_t);
+void         validate_bracket_nesting(StringList_t);
 StringList_t expand_xbo(StringList_t raw,StringSet_t hist,CommandLine &);
 
 CommandLine::CommandLine(int argc,const char **argv)
@@ -37,8 +39,17 @@ CommandLine::CommandLine(int argc,const char **argv)
 
   if( cmd.find('/') == string::npos )  // need to find executable in PATH
   {
-    StringList_t path = split_string( getenv("PATH"), ':' );
-    for( StringList_t::iterator x=path.begin(); x!=path.end(); ++x )
+    StringList_t dirlist;
+
+    const char *path = getenv("PATH");
+    if( path != NULL )
+    {
+      istringstream pathstream( path );
+      string dir;
+      while(std::getline(pathstream,dir,':')) dirlist.push_back(dir);
+    }
+
+    for( StringList_t::iterator x=dirlist.begin(); x!=dirlist.end(); ++x )
     {
       string candidate = rel_to_abs( *x + "/" + cmd );
       if( access(candidate.c_str(), X_OK) == 0 )
@@ -52,10 +63,10 @@ CommandLine::CommandLine(int argc,const char **argv)
   cmd = rel_to_abs(cmd);
 
   string::size_type sep = cmd.find_last_of('/');
-  _path = cmd.substr(0,sep);
-  _proc = cmd.substr(1+sep);
+  _procDir = cmd.substr(0,sep);
+  _proc    = cmd.substr(1+sep);
 
-  if( _path.empty() ) _path = "/";
+  if( _procDir.empty() ) _procDir = "/";
 
   //
   // Build the search path for xbattle data files
@@ -69,42 +80,58 @@ CommandLine::CommandLine(int argc,const char **argv)
     _filePath.push_back(string(getenv("HOME"))+"/.xbattle");
   }
 
-  _filePath.push_back(_path);
-  _filePath.push_back(_path+"/xba");
-  _filePath.push_back(_path+"/xbo");
-  _filePath.push_back(_path+"/xbt");
+  _filePath.push_back(_procDir);
+  _filePath.push_back(_procDir+"/xba");
+  _filePath.push_back(_procDir+"/xbo");
+  _filePath.push_back(_procDir+"/xbt");
 
-  _filePath.push_back(_path+"/share");
-  _filePath.push_back(_path+"/share/xba");
-  _filePath.push_back(_path+"/share/xbo");
-  _filePath.push_back(_path+"/share/xbt");
+  _filePath.push_back(_procDir+"/share");
+  _filePath.push_back(_procDir+"/share/xba");
+  _filePath.push_back(_procDir+"/share/xbo");
+  _filePath.push_back(_procDir+"/share/xbt");
 
-  if( _path.rfind("/bin") == _path.length()-4 )
+  if( _procDir.rfind("/bin") == _procDir.length()-4 )
   {
-    _filePath.push_back(_path+"../share");
-    _filePath.push_back(_path+"../share/xba");
-    _filePath.push_back(_path+"../share/xbo");
-    _filePath.push_back(_path+"../share/xbt");
+    _filePath.push_back(_procDir+"../share");
+    _filePath.push_back(_procDir+"../share/xba");
+    _filePath.push_back(_procDir+"../share/xbo");
+    _filePath.push_back(_procDir+"../share/xbt");
   }
 
   //
   // Load argument vector
   //
-
-  _args.insert(_args.end(), argv+1, argv+argc );
+  
+  StringList_t args(argv+1,argv+argc);
 
   //
   // Add spaces around brackets if needed
   //
 
-  _args = fix_brackets(_args);
+  args = fix_brackets(args);
+
+  // check brackets on command line
+  validate_bracket_nesting(args);
 
   //
   // Expand any option files
   //
  
   StringSet_t xbo_hist;
-  _args = expand_xbo(_args,xbo_hist,*this);
+  args = expand_xbo(args,xbo_hist,*this);
+
+  // check brackets after expanding all levels of option files
+  validate_bracket_nesting(args);
+
+  //
+  // Copy (non-empty) strings to final argument list
+  //
+
+  _args.clear();
+  for(StringList_t::iterator x=args.begin(); x!=args.end(); ++x)
+  {
+    if( !x->empty() ) _args.push_back(*x);
+  }
 }
 
 string CommandLine::rel_to_abs( string path ) const
@@ -167,7 +194,29 @@ StringList_t fix_brackets(StringList_t raw)
     if(a<arg.end()) rval.push_back(string(a,arg.end()));
   }
 
+  validate_bracket_nesting(rval);
+
   return rval;
+}
+
+void validate_bracket_nesting(StringList_t args)
+{
+  bool inGroup=false;
+  for(StringList_t::iterator x=args.begin(); x!=args.end(); ++x)
+  {
+    if(*x=="{")
+    {
+      if(inGroup) throw runtime_error("Nested {} brackets are not allowed");
+      inGroup=true;
+    }
+    else if(*x=="}")
+    {
+      if(!inGroup) throw runtime_error("Closing } bracket found without an opening { bracket");
+      inGroup=false;
+    }
+  }
+
+  if(inGroup) throw runtime_error("Opening { bracket found without a closing } bracket");
 }
 
 StringList_t expand_xbo(StringList_t raw,StringSet_t hist,CommandLine &cl)
@@ -196,19 +245,19 @@ StringList_t expand_xbo(StringList_t raw,StringSet_t hist,CommandLine &cl)
     }
     else
     {
-      string xbo_path = cl.find_file(xbo_file);
-      if( xbo_path.empty() && xbo_file.rfind(".xbo")!=xbo_file.length()-4 ) 
+      string xbo_procDir = cl.find_file(xbo_file);
+      if( xbo_procDir.empty() && xbo_file.rfind(".xbo")!=xbo_file.length()-4 ) 
       {
-        xbo_path = cl.find_file(xbo_file + ".xbo");
+        xbo_procDir = cl.find_file(xbo_file + ".xbo");
       }
-      if( xbo_path.empty() ) throw runtime_error(string("Cannot find option file '")+xbo_file+"'");
+      if( xbo_procDir.empty() ) throw runtime_error(string("Cannot find option file '")+xbo_file+"'");
 
-      if(hist.find(xbo_path)!=hist.end())
+      if(hist.find(xbo_procDir)!=hist.end())
         throw runtime_error(string("Cannot recursively include option files (")+xbo_file+")");
 
-      hist.insert(xbo_path);
+      hist.insert(xbo_procDir);
 
-      ifstream src(xbo_path);
+      ifstream src(xbo_procDir);
       if(!src) throw runtime_error(string("Cannot open options file '") + xbo_file + "'");
 
       StringList_t args;
@@ -228,6 +277,10 @@ StringList_t expand_xbo(StringList_t raw,StringSet_t hist,CommandLine &cl)
       src.close();
 
       args = fix_brackets(args);
+
+      // check brackets within a given option file
+      validate_bracket_nesting(args);
+
       args = expand_xbo(args,hist,cl);
 
       rval.insert(rval.end(),args.begin(),args.end());
