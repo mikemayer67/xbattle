@@ -1,4 +1,5 @@
 *.o
+.*.swp
 xbattle_osx
 xbattle
 Makefile
@@ -7,4 +8,8 @@ config.*
 !*.in
 autom4te.cache*
 orig
+devnotes
+*.x
+xbattle.txt
+*.xlsx
 

@@ -22,7 +22,7 @@ AC_CHECK_HEADERS([stdlib.h string.h sys/time.h])
 
 # Checks for library functions.
 AC_FUNC_MALLOC
-AC_CHECK_FUNCS([getenv])
+AC_CHECK_FUNCS([getenv random])
 
 AC_SUBST(XLIB,${x_libraries})
 AC_SUBST(XINC,${x_includes})

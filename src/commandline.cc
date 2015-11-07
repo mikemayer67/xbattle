@@ -4,11 +4,15 @@
 
 #include "commandline.h"
 #include "util.h"
+#include "config.h"
 
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <exception>
+
+#include <stdlib.h>
+#include <unistd.h>
 
 using namespace std;
 
@@ -34,6 +38,9 @@ CommandLine::CommandLine(int argc,const char **argv)
   //
 
   string cmd = argv[0];
+
+  _procDir = _cwd;  // default value - may be changed below
+  _proc    = cmd;   // default value - may be changed below
 
   if(cmd.empty())       throw runtime_error("Cannot find process name in argv");
 
@@ -63,8 +70,11 @@ CommandLine::CommandLine(int argc,const char **argv)
   cmd = rel_to_abs(cmd);
 
   string::size_type sep = cmd.find_last_of('/');
-  _procDir = cmd.substr(0,sep);
-  _proc    = cmd.substr(1+sep);
+  if(sep!=string::npos)
+  {
+    _procDir = cmd.substr(0,sep);
+    _proc    = cmd.substr(1+sep);
+  }
 
   if( _procDir.empty() ) _procDir = "/";
 

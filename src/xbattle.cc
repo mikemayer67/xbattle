@@ -10,7 +10,7 @@ int main(int argc,const char **argv)
     XBattle xbattle(argc,argv);
     xbattle.run();
   }
-  catch( std::runtime_error &e )
+  catch( std::exception &e )
   {
     std::cerr << std::endl << "Sorry: " << e.what() << std::endl << std::endl;
   }
