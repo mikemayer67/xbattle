@@ -16,8 +16,8 @@ class Options
     void init(const StringList_t &);
 
   private:
-    bool parseGameOption(Option &opt);
-    bool parsePlayerOption(Option &opt);
+    bool parseGameOption(const Option &opt);
+    bool parseNewPlayer(const Option &opt);
     void show_usage(const std::string msg="");
 
     void add_x_color(std::string color);

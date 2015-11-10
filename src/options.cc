@@ -1,6 +1,7 @@
 #include "options.h"
 
 #include <iostream>
+#include <sstream>
 #include <time.h>
 
 #ifndef MINBOARDSIZE
@@ -82,9 +83,26 @@ void Options::init( const StringList_t &args )
     if( opt=="help" ) show_usage();
     try
     {
+      bool subOptionsAllowed = false;
+
       bool        parsed = parseGameOption(opt);
       if(!parsed) parsed = _allPlayers.parseOption(opt);
       if(!parsed) parsed = _allTeams.parseOption(opt);
+      if(!parsed)
+      {
+        parsed = parseNewPlayer(opt);
+        subOptionsAllowed = parsed;
+      }
+      if(!parsed)
+      {
+        throw runtime_error(string("Unrecognized option -") + opt.key());
+      }
+
+      if( ! (subOptionsAllowed || opt.subOptions().empty()) )
+      {
+        throw runtime_error(string("The -")+opt.key()+" option does not accept suboption gropus");
+      }
+
     }
     catch(const runtime_error &err)
     {
@@ -123,7 +141,7 @@ void Options::init( const StringList_t &args )
   }
 }
 
-bool Options::parseGameOption(Option &opt)
+bool Options::parseGameOption(const Option &opt)
 {
   bool rval = true;
 
@@ -182,6 +200,41 @@ bool Options::parseGameOption(Option &opt)
   }
 
   else { rval = false; }
+
+  return rval;
+}
+
+bool Options::parseNewPlayer(const Option &opt)
+{
+  bool rval=true;
+
+  string team_name   = opt.key();
+  string player_name = opt.getString();
+
+  TeamPtr_t   team;
+  for( vector<TeamPtr_t>::iterator t=_teams.begin(); team.isNull() && t!=_teams.end(); ++t )
+  {
+    if( (*t)->name() == team_name ) team = *t;
+  }
+  if( team.isNull() )
+  {
+    team = new Team(_allTeams, team_name);
+    _teams.push_back(team);
+  }
+
+  PlayerPtr_t player = new Player(_allPlayers, team, player_name);
+  team->addPlayer(player);
+
+  const vector<Option> &so = opt.subOptions();
+  for( vector<Option>::const_iterator opt=so.begin(); opt!=so.end(); ++opt )
+  {
+    if( ! ( player->parseOption(*opt) || team->parseOption(*opt) ) )
+    {
+      stringstream err;
+      err << "The -" << opt->key() << " option is not a valid team or player option";
+      throw runtime_error(err.str());
+    }
+  }
 
   return rval;
 }

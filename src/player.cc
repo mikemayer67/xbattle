@@ -8,8 +8,9 @@ Player::Player(string name) :
   _name(name), _cellSize(45), _draw(DrawSimple), _posX(-1), _posY(-1) 
 {}
 
-Player::Player(shr<Team> &team, string name ) : 
-  _name(name), _team(team), _cellSize(45), _draw(DrawSimple), _posX(-1), _posY(-1)
+Player::Player(const Player &x, shr<Team> &team, string name ) : 
+  _name(name), _team(team), 
+  _cellSize(x._cellSize), _draw(x._draw), _posX(x._posX), _posY(x._posY)
 {}
 
 bool Player::parseOption(const Option &opt)

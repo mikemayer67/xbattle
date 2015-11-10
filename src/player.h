@@ -11,7 +11,9 @@ class Player
 {
   public:
     Player(std::string name="");
-    Player(shr<Team> &team, std::string name="");
+    Player(const Player &x, shr<Team> &team, std::string name="");
+
+    std::string name(void) const { return _name; }
 
     bool parseOption(const Option &opt);
 

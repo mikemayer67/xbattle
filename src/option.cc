@@ -190,6 +190,18 @@ bool Option::getIntOrFrac(int &intValue, double &fracValue, bool optional) const
   return true;
 }
 
+string Option::getString(void) const
+{
+  if(_args.size()!=1)
+  {
+    stringstream err;
+    err << "The -" << _key << " option accepts a single string argument";
+    throw runtime_error(err.str());
+  }
+  
+  return _args.at(0);
+}
+
 string Option::getFilename(string defaultValue) const
 {
   int n = _args.size();

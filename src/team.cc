@@ -2,10 +2,11 @@
 #include "player.h"
 #include "option.h"
 
+#include <sstream>
+
 using namespace std;
 
-Team::Team(string name) :
-  _name(name),
+Team::Team(string name) : _name(name),
   _armies(0), _militia(0), _bases(0), _rbases(0),
   _hasHorizon(false), _horizon(2), _hidden(false), 
   _basemap(false),_localmap(false), _map(false),
@@ -26,8 +27,7 @@ Team::Team(string name) :
 {
 }
 
-Team::Team(const Team &x, string name) :
-  _name(x._name), 
+Team::Team(const Team &x, string name) : _name(name), 
   _armies(x._armies), _militia(x._militia), _bases(x._bases), _rbases(x._rbases),
   _hasHorizon(x._hasHorizon), _horizon(x._horizon), _hidden(x._hidden),
   _basemap(x._basemap), _localmap(x._localmap), _map(x._map),
@@ -48,6 +48,21 @@ Team::Team(const Team &x, string name) :
   _allowPara(x._allowPara), _paraRange(x._paraRange), _paraCost(x._paraCost), _paraDamage(x._paraDamage),
   _grid(x._grid), _maxval(x._maxval), _wrap(x._wrap)
 {
+}
+
+void Team::addPlayer(PlayerPtr_t &p)
+{
+  for( vector<PlayerPtr_t>::iterator x=_players.begin(); x!=_players.end(); ++x )
+  {
+    if( (*x)->name() == p->name() )
+    {
+      stringstream err;
+      err << "Cannot add more than one player on display " << p->name() << " to team " << name();
+      throw runtime_error(err.str());
+    }
+  }
+
+  _players.push_back(p);
 }
 
 bool Team::parseOption(const Option &opt)

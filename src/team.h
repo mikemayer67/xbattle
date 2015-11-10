@@ -13,9 +13,11 @@ class Team
     Team(std::string name="");
     Team(const Team &ref, std::string name="");
 
+    std::string name(void) const { return _name; }
+
     bool parseOption(const Option &opt);
 
-    void addPlayer(PlayerPtr_t &);
+    void addPlayer(PlayerPtr_t &p);
 
   private:
     std::string _name;       // actually color

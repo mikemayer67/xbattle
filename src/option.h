@@ -21,6 +21,9 @@ class Option
       return _key == key;
     }
 
+    const std::string         &key       (void) const { return _key;        }
+    const std::vector<Option> &subOptions(void) const { return _subOptions; }
+
     void        validateNoArgs(void) const;
 
     StringList_t getArgs(int num) const;
@@ -28,7 +31,8 @@ class Option
     int          getInt         ( int    min=INT_MIN, int    max=INT_MAX   ) const;
     ulong        getULong       ( ulong  min=0,       ulong  max=ULONG_MAX ) const;
     double       getDouble      ( double min=DBL_MIN, double max=DBL_MAX   ) const;
-    double       getProbability (                                          ) const;
+    double       getProbability ( void                                     ) const;
+    std::string  getString      ( void                                     ) const;
     std::string  getFilename    ( std::string defaultValue=""              ) const;
     void         getColor       ( std::vector<RGB> &                       ) const;
     void         getColor       ( std::map<std::string,RGB> &              ) const;
