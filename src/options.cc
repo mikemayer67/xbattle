@@ -82,7 +82,9 @@ void Options::init( const StringList_t &args )
     if( opt=="help" ) show_usage();
     try
     {
-      bool parsed = parseGameOption(opt);
+      bool        parsed = parseGameOption(opt);
+      if(!parsed) parsed = _allPlayers.parseOption(opt);
+      if(!parsed) parsed = _allTeams.parseOption(opt);
     }
     catch(const runtime_error &err)
     {
@@ -126,8 +128,11 @@ bool Options::parseGameOption(Option &opt)
   bool rval = true;
 
   if     ( opt=="area" )          { opt.validateNoArgs(); _area      = true;     }
+  else if( opt=="noarea" )        { opt.validateNoArgs(); _area      = false;    }
   else if( opt=="overwrite" )     { opt.validateNoArgs(); _overwrite = true;     }
+  else if( opt=="nooverwrite" )   { opt.validateNoArgs(); _overwrite = false;    }
   else if( opt=="step" )          { opt.validateNoArgs(); _step      = true;     }
+  else if( opt=="nostep" )        { opt.validateNoArgs(); _step      = false;    }
 
   else if( opt=="diamond" )       { opt.validateNoArgs(); _tileShape = Diamond;  }
   else if( opt=="hex" )           { opt.validateNoArgs(); _tileShape = Hex;      }

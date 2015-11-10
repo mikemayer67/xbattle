@@ -36,4 +36,12 @@ class RGB
 typedef enum { Square, Hex, Octagon, Diamond, Triangle } TileShape_t;
 typedef enum { Flat, Hills, Forests }                    TerrainType_t;
 
+typedef enum 
+{ DrawSimple,    // Erase circle to terrain color and redraw (fast/flicker)
+  DrawBacking,   // Same as FastRedraw, but in backpane with copy to window
+  DrawPixmap,    // Render cell as pixmap and copy to window (only works w/ squares)
+  DrawWindow,    // Copy cell + surrounding to pixmap, FastRedraw, copy back
+  DrawMasking    // Complete redraw of cell in pixmap (cumbersome, but thorough)
+} DrawMethod_t;
+
 #endif // _TYPES_H_

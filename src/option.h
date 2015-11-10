@@ -25,12 +25,16 @@ class Option
 
     StringList_t getArgs(int num) const;
 
-    int          getInt      ( int    min=INT_MIN, int    max=INT_MAX   ) const;
-    ulong        getULong    ( ulong  min=0,       ulong  max=ULONG_MAX ) const;
-    double       getDouble   ( double min=DBL_MIN, double max=DBL_MAX   ) const;
-    std::string  getFilename ( std::string defaultValue=""              ) const;
-    void         getColor    ( std::vector<RGB> &                       ) const;
-    void         getColor    ( std::map<std::string,RGB> &              ) const;
+    int          getInt         ( int    min=INT_MIN, int    max=INT_MAX   ) const;
+    ulong        getULong       ( ulong  min=0,       ulong  max=ULONG_MAX ) const;
+    double       getDouble      ( double min=DBL_MIN, double max=DBL_MAX   ) const;
+    double       getProbability (                                          ) const;
+    std::string  getFilename    ( std::string defaultValue=""              ) const;
+    void         getColor       ( std::vector<RGB> &                       ) const;
+    void         getColor       ( std::map<std::string,RGB> &              ) const;
+
+    bool getOptInt    ( int &, int    min=INT_MIN, int    max=INT_MAX   ) const;
+    bool getIntOrFrac ( int &, double &, bool optional=false            ) const;
 
   private:
     std::string         _key;

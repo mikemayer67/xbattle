@@ -3,6 +3,9 @@
 
 #include "types.h"
 #include "option.h"
+#include "team.h"
+#include "player.h"
+
 #include <map>
 
 class Options
@@ -14,6 +17,7 @@ class Options
 
   private:
     bool parseGameOption(Option &opt);
+    bool parsePlayerOption(Option &opt);
     void show_usage(const std::string msg="");
 
     void add_x_color(std::string color);
@@ -62,6 +66,13 @@ class Options
 
     std::map<std::string,RGB>         _colors;
     std::map<std::string,std::string> _inverseColors;
+
+  private:
+
+    Team         _allTeams;
+    Player       _allPlayers;
+
+    std::vector<TeamPtr_t> _teams;
 };
 
 #endif // _OPTIONS_H_

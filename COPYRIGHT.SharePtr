@@ -1,0 +1,9 @@
+
+The SharePtr.h header file is incorporated into this version of xbattle
+  by permission of VMWishes.com.
+
+This code is made publically availabe under the GNU General Public License
+  which is included along with this distribution of xbattle.
+
+The code is available via the http://github.com/VMWishes repository.
+  It has been modified slightly to remove the custom namespace capability.

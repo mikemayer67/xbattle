@@ -148,6 +148,48 @@ double Option::getDouble(double min,double max) const
   return rval;
 }
 
+double Option::getProbability(void) const
+{
+  double rval = getDouble(0,100.);
+
+  return ( rval>1. ? 0.01*rval : rval );
+}
+
+bool Option::getOptInt(int &value, int min, int max) const
+{
+  if( _args.empty() ) return false;
+
+  value = getInt(min,max);
+
+  return true;
+}
+
+bool Option::getIntOrFrac(int &intValue, double &fracValue, bool optional) const
+{
+  if( _args.empty() && optional) return false;
+
+  if( _args.size() != 1 )
+  {
+    stringstream err;
+    err << "The -" << _key << " option requires either a numeric argument in the range 0-1 or an integer argument greater than 1";
+    throw runtime_error(err.str());
+  }
+
+  double value = getDouble(0.);
+  if(value<1.)
+  {
+    intValue  = 0;
+    fracValue = value;
+  }
+  else
+  {
+    intValue = int(value+0.5);
+    fracValue = 0.;
+  }
+
+  return true;
+}
+
 string Option::getFilename(string defaultValue) const
 {
   int n = _args.size();
