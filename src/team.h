@@ -9,15 +9,17 @@ class Option;
 
 class Team
 {
+  friend class Teams;
+
   public:
     Team(std::string name="");
     Team(const Team &ref, std::string name="");
 
-    std::string name(void) const { return _name; }
-
     bool parseOption(const Option &opt);
 
     void addPlayer(PlayerPtr_t &p);
+    
+    std::string name(void) const { return _name; }
 
   private:
     std::string _name;       // actually color

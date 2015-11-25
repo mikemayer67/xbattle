@@ -5,11 +5,13 @@
 #include "commandline.h"
 #include "util.h"
 #include "config.h"
+#include "types.h"
 
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <exception>
+#include <algorithm>
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -20,22 +22,32 @@ StringList_t fix_brackets(StringList_t);
 void         validate_bracket_nesting(StringList_t);
 StringList_t expand_xbo(StringList_t raw,StringSet_t hist,CommandLine &);
 
+class EmptyStringPredicate
+{ 
+  public: 
+    bool operator()(const string &s) 
+    { return s.find_first_not_of(" \t")==string::npos; }
+};
+
+class IsOptionPredicate
+{
+  public:
+    bool operator()(const string &s)
+    { return s.length()>1 && s.at(0)=='-'; }
+};
+
 CommandLine::CommandLine(int argc,const char **argv)
 {
   if( argc<1 ) throw invalid_argument("Missing process name on invocation");
 
-  //
   // Locate current working directory
-  //
 
   const char *cwd = getcwd(NULL,0);
   _cwd = cwd;
   free((void*)cwd);
   if( _cwd.empty() ) throw runtime_error("Cannot determine current working directory");
 
-  //
   // Locate process binary
-  //
 
   string cmd = argv[0];
 
@@ -78,9 +90,7 @@ CommandLine::CommandLine(int argc,const char **argv)
 
   if( _procDir.empty() ) _procDir = "/";
 
-  //
-  // Build the search path for xbattle data files
-  //
+  // Build the search path for xbattle rc data files
 
   _filePath.push_back(_cwd);
 
@@ -88,17 +98,14 @@ CommandLine::CommandLine(int argc,const char **argv)
   {
     _filePath.push_back(string(getenv("HOME"))+"/xbattle");
     _filePath.push_back(string(getenv("HOME"))+"/.xbattle");
+    _filePath.push_back(string(getenv("HOME")));
   }
 
   _filePath.push_back(_procDir);
+
   _filePath.push_back(_procDir+"/xba");
   _filePath.push_back(_procDir+"/xbo");
   _filePath.push_back(_procDir+"/xbt");
-
-  _filePath.push_back(_procDir+"/share");
-  _filePath.push_back(_procDir+"/share/xba");
-  _filePath.push_back(_procDir+"/share/xbo");
-  _filePath.push_back(_procDir+"/share/xbt");
 
   if( _procDir.rfind("/bin") == _procDir.length()-4 )
   {
@@ -107,41 +114,102 @@ CommandLine::CommandLine(int argc,const char **argv)
     _filePath.push_back(_procDir+"../share/xbo");
     _filePath.push_back(_procDir+"../share/xbt");
   }
+  else
+  {
+    _filePath.push_back(_procDir+"/share");
+    _filePath.push_back(_procDir+"/share/xba");
+    _filePath.push_back(_procDir+"/share/xbo");
+    _filePath.push_back(_procDir+"/share/xbt");
+  }
 
-  //
   // Load argument vector
-  //
-  
-  StringList_t args(argv+1,argv+argc);
+  StringList_t args;
+  args.insert(args.end(), argv+1, argv+argc);
 
-  //
+  // Set .xbattlerc or .xbattle as the first file to load
+  //   (if found)
+
+  StringList_t cand_rc;
+  cand_rc.push_back(".xbattlerc");
+  cand_rc.push_back("xbattle.rc");
+
+  for( StringList_t::iterator rc=cand_rc.begin(); rc!=cand_rc.end(); ++rc)
+  {
+    string xbrc = find_file(*rc);
+    if( !xbrc.empty() ) 
+    {
+      StringList_t rc_args;
+      rc_args.push_back("-xbo");
+      rc_args.push_back(*rc);
+      StringList_t::iterator pos = find_if(args.begin(),args.end(),IsOptionPredicate());
+      args.insert( pos, rc_args.begin(), rc_args.end() );
+      break;
+    }
+  }
+
   // Add spaces around brackets if needed
-  //
-
   args = fix_brackets(args);
 
-  // check brackets on command line
-  validate_bracket_nesting(args);
+  validate_bracket_nesting(args);  // check brackets on command line
 
-  //
   // Expand any option files
-  //
- 
   StringSet_t xbo_hist;
   args = expand_xbo(args,xbo_hist,*this);
 
-  // check brackets after expanding all levels of option files
-  validate_bracket_nesting(args);
+  validate_bracket_nesting(args);  // recheck brackets after expansion
 
-  //
-  // Copy (non-empty) strings to final argument list
-  //
+  // Remove any empty strings from the argument list
+  args.erase( remove_if(args.begin(), args.end(), EmptyStringPredicate()), args.end() );
 
-  _args.clear();
-  for(StringList_t::iterator x=args.begin(); x!=args.end(); ++x)
+  // Find first option argument (first argument to start with a -)
+  StringList_t::const_iterator begin = args.begin();
+  StringList_t::const_iterator end   = args.end();
+  StringList_t::const_iterator pos   = find_if(begin,end,IsOptionPredicate());
+
+  // Grab all arguments prior to first option
+
+  _args.insert(_args.end(), begin, pos);
+
+  // Grab all options
+
+  while(pos!=end)
   {
-    if( !x->empty() ) _args.push_back(*x);
+    _options.push_back( Option(pos,end) );
   }
+}
+
+bool CommandLine::optionWasSet(std::string s) const
+{
+  for(OptionList_t::const_iterator x=_options.begin(); x!=_options.end(); ++x)
+  {
+    if( *x == s ) return true;
+
+    const OptionList_t subopt = x->subOptions();
+    for(OptionList_t::const_iterator xx=subopt.begin(); xx!=subopt.end(); ++xx)
+    {
+      if( *xx == s ) return true;
+    }
+  }
+
+  return false;
+}
+
+StringSet_t CommandLine::optionKeys(void) const
+{
+  StringSet_t rval;
+
+  for(OptionList_t::const_iterator x=_options.begin(); x!=_options.end(); ++x)
+  {
+    rval.insert(x->key());
+
+    const OptionList_t subopt = x->subOptions();
+    for(OptionList_t::const_iterator xx=subopt.begin(); xx!=subopt.end(); ++xx)
+    {
+      rval.insert(xx->key());
+    }
+  }
+
+  return rval;
 }
 
 string CommandLine::rel_to_abs( string path ) const
@@ -164,7 +232,7 @@ string CommandLine::find_file( string file ) const
   {
     if( file[0]=='/' )
     {
-      rval = file;
+      if( access(file.c_str(),R_OK)==0 ) rval=file;
     }
     else
     {

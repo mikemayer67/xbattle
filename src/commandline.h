@@ -26,14 +26,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "types.h"
+#include "option.h"
 
 class CommandLine
 {
   public:
     CommandLine(int argc,const char **argv);
 
-    const std::string  &proc(void) const { return _proc; }
-    const StringList_t &args(void) const { return _args; }
+    const std::string  &proc(void)    const { return _proc; }
+    const StringList_t &args(void)    const { return _args; }
+    const OptionList_t &options(void) const { return _options; }
+
+    StringSet_t optionKeys(void) const;
+    bool        optionWasSet( std::string s ) const;
 
     std::string find_file ( std::string file ) const;
     std::string rel_to_abs( std::string path ) const;
@@ -41,6 +46,7 @@ class CommandLine
   private:
     std::string  _proc;
     StringList_t _args;
+    OptionList_t _options;
 
     std::string  _procDir;
     std::string  _cwd;

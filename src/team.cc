@@ -86,22 +86,22 @@ bool Team::parseOption(const Option &opt)
 
   else if( opt=="build" )        { opt.getOptInt( _buildSegs, 1 );                     _allowBuild=true;    }
   else if( opt=="nobuild" )      { opt.getOptInt( _buildSegs, 1 );                     _allowBuild=false;   }
-  else if( opt=="build_cost" )   { opt.getIntOrFrac( _buildCost, _buildCostFrac );     _allowBuild=true;    }
-  else if( opt=="build_limit" )  { _buildLimit = opt.getInt(1);                        _allowBuild=true;    }
+  else if( opt=="buildcost" )    { opt.getIntOrFrac( _buildCost, _buildCostFrac );     _allowBuild=true;    }
+  else if( opt=="buildlimit" )   { _buildLimit = opt.getInt(1);                        _allowBuild=true;    }
   else if( opt=="scuttle" )      { opt.getOptInt( _scuttleSegs, 1);                    _allowScuttle=true;  }
   else if( opt=="noscuttle" )    { opt.validateNoArgs();                               _allowScuttle=false; }
-  else if( opt=="scuttle_cost" ) { opt.getIntOrFrac( _scuttleCost, _scuttleCostFrac ); _allowScuttle=true;  }
+  else if( opt=="scuttlecost" )  { opt.getIntOrFrac( _scuttleCost, _scuttleCostFrac ); _allowScuttle=true;  }
 
   else if( opt=="dig" )          { opt.validateNoArgs();                               _allowDig=true;      }
   else if( opt=="nodig" )        { opt.validateNoArgs();                               _allowDig=false;     }
-  else if( opt=="dig_cost" )     { opt.getIntOrFrac( _digCost, _digCostFrac );         _allowDig=true;      }
+  else if( opt=="digcost" )      { opt.getIntOrFrac( _digCost, _digCostFrac );         _allowDig=true;      }
   else if( opt=="fill" )         { opt.validateNoArgs();                               _allowFill=true;     }
   else if( opt=="nofill" )       { opt.validateNoArgs();                               _allowFill=false;    }
-  else if( opt=="fill_cost" )    { opt.getIntOrFrac( _fillCost, _fillCostFrac );       _allowFill=true;     }
+  else if( opt=="fillcost" )     { opt.getIntOrFrac( _fillCost, _fillCostFrac );       _allowFill=true;     }
 
   else if( opt=="erode" )        { opt.getOptInt( _erodeGate, 0 );                     _hasErode=true;      }
   else if( opt=="noerode" )      { opt.validateNoArgs();                               _hasErode=false;     }
-  else if( opt=="erode_thresh" ) { _erodeThresh = opt.getProbability();                _hasErode=true;      }
+  else if( opt=="erodethresh" )  { _erodeThresh = opt.getProbability();                _hasErode=true;      }
   else if( opt=="decay" )        { _decay       = opt.getProbability();                                     }
   else if( opt=="nodecay" )      { _decay = 0.;                                                             }
 
@@ -131,12 +131,12 @@ bool Team::parseOption(const Option &opt)
 
   else if( opt=="guns" )         { opt.getIntOrFrac(_gunRange,_gunRangeFrac,true);     _allowGuns=true;     }
   else if( opt=="noguns" )       { opt.validateNoArgs();                               _allowGuns=false;    }
-  else if( opt=="guns_cost" )    { _gunCost = opt.getInt(1);                           _allowGuns=true;     }
-  else if( opt=="guns_damage" )  { _gunDamage = opt.getInt(1);                         _allowGuns=true;     }
+  else if( opt=="gunscost" )     { _gunCost = opt.getInt(1);                           _allowGuns=true;     }
+  else if( opt=="gunsdamage" )   { _gunDamage = opt.getInt(1);                         _allowGuns=true;     }
   else if( opt=="para" )         { opt.getIntOrFrac(_paraRange,_paraRangeFrac,true);   _allowPara=true;     }
   else if( opt=="nopara" )       { opt.validateNoArgs();                               _allowPara=false;    }
-  else if( opt=="para_cost" )    { _paraCost = opt.getInt(1);                          _allowPara=true;     }
-  else if( opt=="para_damage" )  { _paraDamage = opt.getInt(1);                        _allowPara=true;     }
+  else if( opt=="paracost" )     { _paraCost = opt.getInt(1);                          _allowPara=true;     }
+  else if( opt=="paradamage" )   { _paraDamage = opt.getInt(1);                        _allowPara=true;     }
 
   else if( opt=="grid" )         { opt.validateNoArgs();                               _grid=true;          }
   else if( opt=="nogrid" )       { opt.validateNoArgs();                               _grid=false;         }
@@ -148,4 +148,3 @@ bool Team::parseOption(const Option &opt)
 
   return rval;
 }
-

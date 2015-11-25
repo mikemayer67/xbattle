@@ -1,6 +1,7 @@
 #include "option.h"
 
 #include <sstream>
+#include <locale>
 
 using namespace std;
 
@@ -24,19 +25,37 @@ void validateLimits(T v, T min, T max, string opt);
 // Options methods
 //
 
-Option::Option(       StringList_t::const_iterator &pos,
+Option::Option( StringList_t::const_iterator &pos,
                 const StringList_t::const_iterator &end,
                 bool  inGroup )
 {
   _key = *(pos++);
-  transform(_key.begin(),_key.end(),_key.begin(),::tolower);
 
-  if(_key[0]!='-') 
-    throw runtime_error(string("Invalid option '")+_key+"' (does not start with -)");
+  if( _key[0] != '-' )
+    throw runtime_error(string("Invalid _keyion '")+_key+"' (does not start with -)");
 
-  _key.erase(0,1);
+  locale loc;
+  for(int i=0; i<_key.size(); ++i) _key[i] = tolower(_key[i],loc);
 
-  while(pos<end)
+  _key.erase( remove(_key.begin(),_key.end(),'-'), _key.end() );
+  _key.erase( remove(_key.begin(),_key.end(),'_'), _key.end() );
+
+  // translate synonyms
+  if      ( _key=="foresttones")  _key = "forestlevels";
+  else if ( _key=="hilltones")    _key = "hilllevels";
+  else if ( _key=="sea")          _key = "seafrac";
+  else if ( _key=="sealevels")    _key = "seadepth";
+  else if ( _key=="seatones")     _key = "seadepth";
+
+  if(inGroup)
+  {
+    if( _key=="color" )
+      throw runtime_error("The -color option cannot appear within a set of team options");
+    if( _key=="colorinverse" )
+      throw runtime_error("The -color_inverse option cannot appear within a set of team options");
+  }
+
+  while(pos!=end)
   {
     if(*pos=="{")
     {
@@ -79,6 +98,17 @@ Option::Option(       StringList_t::const_iterator &pos,
   }
 }
 
+bool Option::operator==(std::string key) const
+{
+  if( _key == key ) return true;
+  if( key.substr(0,2)=="no" )
+  {
+    key.replace(0,2,"no_");
+    if( _key==key ) return true;
+  }
+  return false;
+}
+
 void Option::validateNoArgs(void) const
 {
   if( ! _args.empty() )
@@ -90,13 +120,23 @@ void Option::validateNoArgs(void) const
   }
 }
 
-StringList_t Option::getArgs(int num) const
+StringList_t Option::getArgs(int min, int max) const
 {
-  if( _args.size() != num )
+  if(min>max) throw logic_error("getArgs(min,max) called with min>max");
+
+  if( _args.size() < min || _args.size() > max )
   {
     stringstream err;
-    if(num==1) err << "The -" << _key << " option requires a single argument";
-    else       err << "The -" << _key << " option requires " << num << " arguments";
+    err << "The -" << _key << " option requrires ";
+    if(max==1)
+    {
+      if(min==0) err << "no more than one (optional) argument";
+      else       err << "a single argument";
+    }
+    else if(min==0)      err << "no more than " << max << " arguments";
+    else if(min==max)    err << "exactly " << min << " arguments";
+    else                 err << "between " << min << " and " << max << " arguments";
+
     throw runtime_error(err.str());
   }
   return _args;
@@ -236,7 +276,9 @@ void Option::getColor( vector<RGB> &colors ) const
   if( ! (n==2 || n==4) )
   {
     stringstream err;
-    err << "The -" << _key << " option requires 4 integer arguments: level red green blue";
+    err << "The -" << _key << " option requires either" << endl
+      << "      an integer argument (level) followed by a color name" << endl
+      << "   or 4 integer arguments: level red green blue" << endl;
     throw runtime_error(err.str());
   }
  
@@ -280,36 +322,37 @@ void Option::getColor( vector<RGB> &colors ) const
   }
 }
 
-void Option::getColor( map<string,RGB> &colors ) const
+void Option::getColor( string &name, RGB &color, string &inverse ) const
 {
   int n = _args.size();
 
-  if( ! (n==2 || n==4) )
+  if( n<4 || n>5 )
   {
     stringstream err;
-    err << "The -" << _key << " option requires 4 integer arguments: level red green blue";
-    throw runtime_error(err.str());
-  }
- 
-  RGB color;
-  try
-  {
-    if( n==2 ) color = RGB( _args.at(1) );
-    else       color = RGB( str_to_int(_args.at(1),_key),
-                            str_to_int(_args.at(2),_key),
-                            str_to_int(_args.at(3),_key) );
-  }
-  catch(exception &e)
-  {
-    stringstream err;
-    err
-      << "Invalid color argument found while parsing the -" << _key
-      << " option (" << e.what() << ")";
+    err << "The -" << _key << " option requires a color name" << endl
+      << "   followed by red, green, and blue component values (0-255)" << endl
+      << "   followed by an optional inverse color name";
     throw runtime_error(err.str());
   }
 
-  string name = _args.at(0);
-  colors[name] = color;
+  try
+  {
+    name = _args.at(0);
+
+    color = RGB( str_to_int(_args.at(1),_key),
+                 str_to_int(_args.at(2),_key),
+                 str_to_int(_args.at(3),_key) );
+
+    if( n==5 ) inverse = _args.at(4);
+  }
+  catch(exception e)
+  {
+    stringstream err;
+    err << "The -" << _key << " option failed to parse the color values" << endl
+      << "    " << e.what();
+    throw runtime_error(err.str());
+  }
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////
