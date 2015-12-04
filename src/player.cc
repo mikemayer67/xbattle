@@ -2,16 +2,22 @@
 #include "team.h"
 #include "option.h"
 
+#include <sstream>
+
 using namespace std;
 
-Player::Player(string name) : 
-  _name(name), _cellSize(45), _draw(DrawSimple), _posX(-1), _posY(-1) 
-{}
+Player::Player(string display) : 
+  _display_id(display), _cellSize(45), _draw(DrawSimple), _posX(-1), _posY(-1) 
+{
+  open_display();
+}
 
-Player::Player(const Player &x, shr<Team> &team, string name ) : 
-  _name(name), _team(team), 
+Player::Player(const Player &x, shr<Team> &team, string display ) : 
+  _display_id(display), _team(team), 
   _cellSize(x._cellSize), _draw(x._draw), _posX(x._posX), _posY(x._posY)
-{}
+{
+  open_display();
+}
 
 bool Player::parseOption(const Option &opt)
 {
@@ -39,4 +45,22 @@ bool Player::parseOption(const Option &opt)
   else { rval = false; }
 
   return rval;
+}
+
+void Player::open_display(void)
+{
+  if(_display_id.empty()) // not a real player
+  {
+    _display=NULL;
+    return;
+  }
+
+  _display = XOpenDisplay(_display_id.c_str());
+
+  if( _display==NULL )
+  {
+    stringstream err;
+    err << "Failed to open an X display on " << _display_id;
+    throw runtime_error(err.str());
+  }
 }

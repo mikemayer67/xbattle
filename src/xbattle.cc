@@ -189,7 +189,7 @@ bool XBattle::parseNewPlayer(const Option &opt)
   bool rval=true;
 
   string team_name   = opt.key();
-  string player_name = opt.getString();
+  string display = opt.getString();
 
   TeamPtr_t   team;
   for( vector<TeamPtr_t>::iterator t=_teams.begin(); team.isNull() && t!=_teams.end(); ++t )
@@ -204,19 +204,28 @@ bool XBattle::parseNewPlayer(const Option &opt)
 
   PlayerPtr_t player(0);
   
-  if( player_name != "you" )
+  if( display != "you" )
   {
-    string::size_type pos = player_name.find_last_of(':');
+    if( display == "me" )
+    {
+      display = getenv("DISPLAY");
+      if(display.empty())
+        throw runtime_error("Cannot specify the display as \"me\" unless DISPLAY is set");
+    }
+
+    string::size_type pos = display.find_last_of(':');
     if( pos==string::npos )
     {
-      if( player_name.find_first_not_of("0123456789.",pos) != string::npos )
-      {
-        stringstream err;
-        err << "'" << player_name.substr(pos) << "' is not a valid screen display identifier";
-        throw(err.str());
-      }
+      display += ":0.0";
     }
-    player = new Player(_allPlayers, team, player_name);
+    else if( display.find_first_not_of("0123456789.",pos+1) != string::npos )
+    {
+      stringstream err;
+      err << "'" << display.substr(pos) << "' is not a valid display identifier";
+      throw(err.str());
+    }
+
+    player = new Player(_allPlayers, team, display);
     team->addPlayer(player);
   }
 

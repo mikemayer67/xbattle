@@ -4,27 +4,36 @@
 #include "types.h"
 #include "SharePtr.h"
 
+#include <X11/X.h>
+#include <X11/Xlib.h>
+
 class Team;
 class Option;
 
 class Player
 {
   public:
-    Player(std::string name="");
-    Player(const Player &x, shr<Team> &team, std::string name="");
+    Player(std::string display="");
+    Player(const Player &x, shr<Team> &team, std::string display="");
 
-    std::string name(void) const { return _name; }
+    std::string name(void) const { return _display_id; }
 
     bool parseOption(const Option &opt);
 
   private:
-    std::string  _name;  // actually name of the display
+    void open_display(void);
+
+  private:
+    std::string  _display_id;
     shr<Team>    _team;
 
     int          _cellSize;
     DrawMethod_t _draw;
     int          _posX;
     int          _posY;
+
+  private:
+    Display     *_display;
 };
 
 typedef shr<Player> PlayerPtr_t;
