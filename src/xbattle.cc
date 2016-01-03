@@ -82,6 +82,8 @@ XBattle::XBattle(const CommandLine &cl) : _commandLine(cl),
     }
   }
 
+  _teams.validateDrawMethod(_tileShape);
+
   // complete terrain palettes
 
   if( _terrainType==Hills ) 
@@ -100,10 +102,12 @@ XBattle::XBattle(const CommandLine &cl) : _commandLine(cl),
   }
 
   //
-  // Compute derived option values
-  //
+  // Compute derived option values (and seed random number generator)
   //
   
+  cout << "Seeding random number generator: " << _seed << endl;
+  srandom(_seed);
+
   _loopDelay = 25000./_speed + 0.5;
 
   _teams.resolveFractionalCosts();

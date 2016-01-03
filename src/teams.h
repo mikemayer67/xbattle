@@ -15,6 +15,8 @@ class Teams : public std::vector<TeamPtr_t>
 
     void resolveFractionalCosts(void);
     void resolveFractionalDistance(int maxRange);
+
+    void validateDrawMethod(TileShape_t);
 };
 
 #endif // _TEAMS_H_

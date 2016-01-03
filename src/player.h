@@ -19,6 +19,7 @@ class Player
     std::string name(void) const { return _display_id; }
 
     bool parseOption(const Option &opt);
+    void validateDrawMethod(TileShape_t);
 
   private:
     void open_display(void);

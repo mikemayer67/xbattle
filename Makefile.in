@@ -59,3 +59,167 @@ uninstall:
 	-$(RMDIR) $(DESTDIR)$(datadir)/$(TARGET)
 	-$(RM) $(DESTDIR)$(mandir)/xbattle.*
 
+# DO NOT DELETE
+
+obj/color.o: src/color.h /usr/include/math.h /usr/include/sys/cdefs.h
+obj/color.o: /usr/include/sys/_symbol_aliasing.h
+obj/color.o: /usr/include/sys/_posix_availability.h
+obj/color.o: /usr/include/Availability.h
+obj/color.o: /usr/include/AvailabilityInternal.h
+obj/commandline.o: src/commandline.h src/types.h src/option.h
+obj/commandline.o: /usr/include/limits.h /usr/include/sys/cdefs.h
+obj/commandline.o: /usr/include/sys/_symbol_aliasing.h
+obj/commandline.o: /usr/include/sys/_posix_availability.h
+obj/commandline.o: /usr/include/machine/limits.h
+obj/commandline.o: /usr/include/i386/limits.h /usr/include/i386/_limits.h
+obj/commandline.o: /usr/include/sys/syslimits.h src/color.h
+obj/commandline.o: /usr/include/util.h /usr/include/sys/ttycom.h
+obj/commandline.o: /usr/include/sys/ioccom.h /usr/include/sys/_types.h
+obj/commandline.o: /usr/include/machine/_types.h
+obj/commandline.o: /usr/include/i386/_types.h
+obj/commandline.o: /usr/include/sys/_pthread/_pthread_types.h
+obj/commandline.o: /usr/include/sys/types.h
+obj/commandline.o: /usr/include/sys/appleapiopts.h
+obj/commandline.o: /usr/include/machine/types.h /usr/include/i386/types.h
+obj/commandline.o: /usr/include/sys/_types/_int8_t.h
+obj/commandline.o: /usr/include/sys/_types/_int16_t.h
+obj/commandline.o: /usr/include/sys/_types/_int32_t.h
+obj/commandline.o: /usr/include/sys/_types/_int64_t.h
+obj/commandline.o: /usr/include/sys/_types/_intptr_t.h
+obj/commandline.o: /usr/include/sys/_types/_uintptr_t.h
+obj/commandline.o: /usr/include/machine/endian.h
+obj/commandline.o: /usr/include/i386/endian.h /usr/include/sys/_endian.h
+obj/commandline.o: /usr/include/libkern/_OSByteOrder.h
+obj/commandline.o: /usr/include/libkern/i386/_OSByteOrder.h
+obj/commandline.o: /usr/include/sys/_types/_dev_t.h
+obj/commandline.o: /usr/include/sys/_types/_blkcnt_t.h
+obj/commandline.o: /usr/include/sys/_types/_blksize_t.h
+obj/commandline.o: /usr/include/sys/_types/_gid_t.h
+obj/commandline.o: /usr/include/sys/_types/_in_addr_t.h
+obj/commandline.o: /usr/include/sys/_types/_in_port_t.h
+obj/commandline.o: /usr/include/sys/_types/_ino_t.h
+obj/commandline.o: /usr/include/sys/_types/_ino64_t.h
+obj/commandline.o: /usr/include/sys/_types/_key_t.h
+obj/commandline.o: /usr/include/sys/_types/_mode_t.h
+obj/commandline.o: /usr/include/sys/_types/_nlink_t.h
+obj/commandline.o: /usr/include/sys/_types/_id_t.h
+obj/commandline.o: /usr/include/sys/_types/_pid_t.h
+obj/commandline.o: /usr/include/sys/_types/_off_t.h
+obj/commandline.o: /usr/include/sys/_types/_uid_t.h
+obj/commandline.o: /usr/include/sys/_types/_clock_t.h
+obj/commandline.o: /usr/include/sys/_types/_size_t.h
+obj/commandline.o: /usr/include/sys/_types/_ssize_t.h
+obj/commandline.o: /usr/include/sys/_types/_time_t.h
+obj/commandline.o: /usr/include/sys/_types/_useconds_t.h
+obj/commandline.o: /usr/include/sys/_types/_suseconds_t.h
+obj/commandline.o: /usr/include/sys/_types/_rsize_t.h
+obj/commandline.o: /usr/include/sys/_types/_errno_t.h
+obj/commandline.o: /usr/include/sys/_types/_fd_def.h
+obj/commandline.o: /usr/include/sys/_types/_fd_setsize.h
+obj/commandline.o: /usr/include/sys/_types/_fd_set.h
+obj/commandline.o: /usr/include/sys/_types/_fd_clr.h
+obj/commandline.o: /usr/include/sys/_types/_fd_zero.h
+obj/commandline.o: /usr/include/sys/_types/_fd_isset.h
+obj/commandline.o: /usr/include/sys/_types/_fd_copy.h
+obj/commandline.o: /usr/include/sys/_pthread/_pthread_attr_t.h
+obj/commandline.o: /usr/include/sys/_pthread/_pthread_cond_t.h
+obj/commandline.o: /usr/include/sys/_pthread/_pthread_condattr_t.h
+obj/commandline.o: /usr/include/sys/_pthread/_pthread_mutex_t.h
+obj/commandline.o: /usr/include/sys/_pthread/_pthread_mutexattr_t.h
+obj/commandline.o: /usr/include/sys/_pthread/_pthread_once_t.h
+obj/commandline.o: /usr/include/sys/_pthread/_pthread_rwlock_t.h
+obj/commandline.o: /usr/include/sys/_pthread/_pthread_rwlockattr_t.h
+obj/commandline.o: /usr/include/sys/_pthread/_pthread_t.h
+obj/commandline.o: /usr/include/sys/_pthread/_pthread_key_t.h
+obj/commandline.o: /usr/include/sys/_types/_fsblkcnt_t.h
+obj/commandline.o: /usr/include/sys/_types/_fsfilcnt_t.h
+obj/commandline.o: /usr/include/stdio.h /usr/include/Availability.h
+obj/commandline.o: /usr/include/AvailabilityInternal.h
+obj/commandline.o: /usr/include/_types.h
+obj/commandline.o: /usr/include/sys/_types/_va_list.h
+obj/commandline.o: /usr/include/sys/_types/_null.h
+obj/commandline.o: /usr/include/sys/stdio.h /usr/include/secure/_stdio.h
+obj/commandline.o: /usr/include/secure/_common.h /usr/include/pwd.h
+obj/commandline.o: /usr/include/uuid/uuid.h
+obj/commandline.o: /usr/include/sys/_types/_uuid_t.h
+obj/commandline.o: /usr/include/termios.h /usr/include/sys/termios.h
+obj/commandline.o: /usr/include/sys/_types/_posix_vdisable.h
+obj/commandline.o: /usr/include/sys/ttydefaults.h /usr/include/utmp.h
+obj/commandline.o: config.h /usr/include/stdlib.h /usr/include/sys/wait.h
+obj/commandline.o: /usr/include/sys/signal.h /usr/include/machine/signal.h
+obj/commandline.o: /usr/include/i386/signal.h
+obj/commandline.o: /usr/include/machine/_mcontext.h
+obj/commandline.o: /usr/include/i386/_mcontext.h
+obj/commandline.o: /usr/include/mach/i386/_structs.h
+obj/commandline.o: /usr/include/sys/_types/_sigaltstack.h
+obj/commandline.o: /usr/include/sys/_types/_ucontext.h
+obj/commandline.o: /usr/include/sys/_types/_sigset_t.h
+obj/commandline.o: /usr/include/sys/resource.h /usr/include/stdint.h
+obj/commandline.o: /usr/include/_types/_uint8_t.h
+obj/commandline.o: /usr/include/_types/_uint16_t.h
+obj/commandline.o: /usr/include/_types/_uint32_t.h
+obj/commandline.o: /usr/include/_types/_uint64_t.h
+obj/commandline.o: /usr/include/_types/_intmax_t.h
+obj/commandline.o: /usr/include/_types/_uintmax_t.h
+obj/commandline.o: /usr/include/sys/_types/_timeval.h
+obj/commandline.o: /usr/include/alloca.h
+obj/commandline.o: /usr/include/sys/_types/_ct_rune_t.h
+obj/commandline.o: /usr/include/sys/_types/_rune_t.h
+obj/commandline.o: /usr/include/sys/_types/_wchar_t.h
+obj/commandline.o: /usr/include/unistd.h /usr/include/sys/unistd.h
+obj/commandline.o: /usr/include/sys/_types/_seek_set.h
+obj/commandline.o: /usr/include/sys/select.h
+obj/commandline.o: /usr/include/sys/_types/_timespec.h
+obj/commandline.o: /usr/include/sys/_select.h /usr/include/gethostuuid.h
+obj/edit.o: src/xbattle.h src/types.h src/commandline.h src/option.h
+obj/edit.o: /usr/include/limits.h /usr/include/sys/cdefs.h
+obj/edit.o: /usr/include/sys/_symbol_aliasing.h
+obj/edit.o: /usr/include/sys/_posix_availability.h
+obj/edit.o: /usr/include/machine/limits.h /usr/include/i386/limits.h
+obj/edit.o: /usr/include/i386/_limits.h /usr/include/sys/syslimits.h
+obj/edit.o: src/color.h src/player.h src/SharePtr.h src/team.h src/teams.h
+obj/main.o: src/xbattle.h src/types.h src/commandline.h src/option.h
+obj/main.o: /usr/include/limits.h /usr/include/sys/cdefs.h
+obj/main.o: /usr/include/sys/_symbol_aliasing.h
+obj/main.o: /usr/include/sys/_posix_availability.h
+obj/main.o: /usr/include/machine/limits.h /usr/include/i386/limits.h
+obj/main.o: /usr/include/i386/_limits.h /usr/include/sys/syslimits.h
+obj/main.o: src/color.h src/player.h src/SharePtr.h src/team.h src/teams.h
+obj/option.o: src/option.h src/types.h /usr/include/limits.h
+obj/option.o: /usr/include/sys/cdefs.h /usr/include/sys/_symbol_aliasing.h
+obj/option.o: /usr/include/sys/_posix_availability.h
+obj/option.o: /usr/include/machine/limits.h /usr/include/i386/limits.h
+obj/option.o: /usr/include/i386/_limits.h /usr/include/sys/syslimits.h
+obj/option.o: src/color.h
+obj/player.o: src/player.h src/types.h src/SharePtr.h src/team.h
+obj/player.o: src/option.h /usr/include/limits.h /usr/include/sys/cdefs.h
+obj/player.o: /usr/include/sys/_symbol_aliasing.h
+obj/player.o: /usr/include/sys/_posix_availability.h
+obj/player.o: /usr/include/machine/limits.h /usr/include/i386/limits.h
+obj/player.o: /usr/include/i386/_limits.h /usr/include/sys/syslimits.h
+obj/player.o: src/color.h
+obj/replay.o: src/xbattle.h src/types.h src/commandline.h src/option.h
+obj/replay.o: /usr/include/limits.h /usr/include/sys/cdefs.h
+obj/replay.o: /usr/include/sys/_symbol_aliasing.h
+obj/replay.o: /usr/include/sys/_posix_availability.h
+obj/replay.o: /usr/include/machine/limits.h /usr/include/i386/limits.h
+obj/replay.o: /usr/include/i386/_limits.h /usr/include/sys/syslimits.h
+obj/replay.o: src/color.h src/player.h src/SharePtr.h src/team.h
+obj/replay.o: src/teams.h
+obj/team.o: src/team.h src/types.h src/player.h src/SharePtr.h
+obj/team.o: src/option.h /usr/include/limits.h /usr/include/sys/cdefs.h
+obj/team.o: /usr/include/sys/_symbol_aliasing.h
+obj/team.o: /usr/include/sys/_posix_availability.h
+obj/team.o: /usr/include/machine/limits.h /usr/include/i386/limits.h
+obj/team.o: /usr/include/i386/_limits.h /usr/include/sys/syslimits.h
+obj/team.o: src/color.h
+obj/teams.o: src/teams.h src/team.h src/types.h src/player.h
+obj/teams.o: src/SharePtr.h
+obj/xbattle.o: src/xbattle.h src/types.h src/commandline.h src/option.h
+obj/xbattle.o: /usr/include/limits.h /usr/include/sys/cdefs.h
+obj/xbattle.o: /usr/include/sys/_symbol_aliasing.h
+obj/xbattle.o: /usr/include/sys/_posix_availability.h
+obj/xbattle.o: /usr/include/machine/limits.h /usr/include/i386/limits.h
+obj/xbattle.o: /usr/include/i386/_limits.h /usr/include/sys/syslimits.h
+obj/xbattle.o: src/color.h src/player.h src/SharePtr.h src/team.h
+obj/xbattle.o: src/teams.h

@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Team::Team(string name) : _name(name),
+Team::Team(string name) : //_name(name),
   _armies(0), _militia(0), _bases(0), _rbases(0),
   _hasHorizon(false), _horizon(2), _hidden(false), 
   _basemap(false),_localmap(false), _map(false),
@@ -23,11 +23,12 @@ Team::Team(string name) : _name(name),
   _disrupt(false), _fight(5), _nospigot(false), _nospigotRatio(5),
   _allowGuns(false), _gunRange(0), _gunRangeFrac(0.), _gunCost(2), _gunDamage(1),
   _allowPara(false), _paraRange(0), _paraRangeFrac(0.), _paraCost(2), _paraDamage(1),
-  _grid(true), _maxval(20), _wrap (false)
+  _grid(true), _maxval(20), _wrap (false),
+  _build_count(0), _troop_count(0), _cell_count(0)
 {
 }
 
-Team::Team(const Team &x, string name) : _name(name), 
+Team::Team(const Team &x, string name) : //_name(name), 
   _armies(x._armies), _militia(x._militia), _bases(x._bases), _rbases(x._rbases),
   _hasHorizon(x._hasHorizon), _horizon(x._horizon), _hidden(x._hidden),
   _basemap(x._basemap), _localmap(x._localmap), _map(x._map),
@@ -46,7 +47,8 @@ Team::Team(const Team &x, string name) : _name(name),
   _allowGuns(x._allowGuns), _gunRange(x._gunRange), _gunRangeFrac(x._gunRangeFrac),
   _gunCost(x._gunCost), _gunDamage(x._gunDamage), 
   _allowPara(x._allowPara), _paraRange(x._paraRange), _paraCost(x._paraCost), _paraDamage(x._paraDamage),
-  _grid(x._grid), _maxval(x._maxval), _wrap(x._wrap)
+  _grid(x._grid), _maxval(x._maxval), _wrap(x._wrap),
+  _build_count(0), _troop_count(0), _cell_count(0)
 {
 }
 
@@ -147,4 +149,10 @@ bool Team::parseOption(const Option &opt)
   else { rval = false; }
 
   return rval;
+}
+
+void Team::validateDrawMethod(TileShape_t shape)
+{
+  for(vector<PlayerPtr_t>::iterator x=_players.begin(); x!=_players.end(); ++x)
+    (*x)->validateDrawMethod(shape);
 }

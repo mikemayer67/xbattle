@@ -2,6 +2,7 @@
 #include "team.h"
 #include "option.h"
 
+#include <iostream>
 #include <sstream>
 
 using namespace std;
@@ -47,6 +48,17 @@ bool Player::parseOption(const Option &opt)
   return rval;
 }
 
+void Player::validateDrawMethod(TileShape_t shape)
+{
+  if( _draw==DrawPixmap && shape!=Square )
+  {
+    cerr << "Cannot use the DrawPixmap(2) method for anything other than square tiles" <<endl
+      << "   Setting draw method for " << _display_id << " to DrawSimple(0)" << endl;
+
+    _draw= DrawSimple;
+  }
+}
+
 void Player::open_display(void)
 {
   if(_display_id.empty()) // not a real player
@@ -64,3 +76,4 @@ void Player::open_display(void)
     throw runtime_error(err.str());
   }
 }
+

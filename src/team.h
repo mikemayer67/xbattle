@@ -18,10 +18,12 @@ class Team
     bool parseOption(const Option &opt);
 
     void addPlayer(PlayerPtr_t &p);
+    void validateDrawMethod(TileShape_t);
     
     std::string name(void) const { return _name; }
 
-  private:
+  private: // team config
+
     std::string _name;       // actually color
     
     int    _armies;          // number of initial armies assigned to team
@@ -90,6 +92,12 @@ class Team
     bool   _grid;            // display grid
     int    _maxval;          // maximum troops per cell
     bool   _wrap;            // movement wraps around edge of screen
+
+  private:  // stats
+
+    int    _build_count;
+    int    _troop_count;
+    int    _cell_count;
 
   private:
     std::vector<PlayerPtr_t> _players;

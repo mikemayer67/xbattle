@@ -61,3 +61,9 @@ void Teams::resolveFractionalDistance(int maxRange)
     if(tp->_paraRange==0) tp->_paraRange = max( 1, int(0.5 + maxRange * tp->_paraRangeFrac) );
   }
 }
+
+void Teams::validateDrawMethod(TileShape_t shape)
+{
+  for(const_iterator x=begin(); x!=end(); ++x)
+    (*x)->validateDrawMethod(shape);
+}
